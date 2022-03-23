@@ -1,1 +1,24 @@
-<p>home works!</p>
+<div #logIn *ngIf="!Character">
+    <input #logInTextField type="text" (keyup.enter)="onNameEnter(logInTextField.value)" />
+</div>
+<div #characterData *ngIf="Character">
+    <h3>Character Data</h3>
+    <p>Name: {{Character.Name}}</p>
+    <p>
+        <button (click)="Character.Level = Character.Level - 1;">-</button>
+        <button (click)="Character.Level = Character.Level + 1;">+</button>
+        &nbsp;Level: {{Character.Level}}
+    </p>
+    <p>
+        <button (click)="Character.Currency = Character.Currency - 1;">-</button>
+        <button (click)="Character.Currency = Character.Currency + 1;">+</button>
+        &nbsp;Currency: {{Character.Currency}}
+    </p>
+    <p>Save Data</p>
+    <textarea rows="5" cols="50">{{Character.GenerateSaveString()}}</textarea>
+
+    <h3>Current Online Players</h3>
+    <div *ngFor="let player of CurrentOnlinePlayers">
+        <p>{{player.Name}}</p>
+    </div>
+</div>
