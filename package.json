@@ -1,0 +1,18 @@
+{
+  "dependencies": {
+    "@angular/cli": "^13.3.0",
+    "express": "^4.17.3",
+    "socket-io": "^1.0.0",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1"
+  },
+  "name": "hacker",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
