@@ -1,27 +1,34 @@
 import { ElementRef } from "@angular/core";
+import { Character } from "../character";
 import { Inventory } from "../inventory/inventory";
 import { InventoryHandler } from "../inventory/inventory-handler";
 import { Craftable } from "../items/craftable";
 import { ItemType } from "../items/item";
 import { RecipeItem } from "../items/recipe-item";
-import { Spear } from "../items/spear";
+import { WoodenPickaxe } from "../items/wooden-pickaxe";
+import { WoodenSpear } from "../items/wooden-spear";
+import { LevelHandler } from "../leveling/level-handler";
 
 export class CraftHandler {
+    private levelHandler = new LevelHandler();
     private inventoryHandler = new InventoryHandler();
     public CraftableItems: Craftable[] = [
-        new Spear()
+        new WoodenSpear(),
+        new WoodenPickaxe()
     ];
 
-    public CraftItem(item: Craftable, playerLevel: number, playerInventory: Inventory, activityLog: ElementRef) : Inventory {
+    public CraftItem(item: Craftable, player: Character, playerInventory: Inventory, activityLog: ElementRef) : Inventory {
         if(item.Type != ItemType.Material)
         {
-            if(item.LevelRequirement <= playerLevel) {
+            if(item.LevelRequirement <= player.Level) {
                 var playerHaveRequiredMaterials = this.HasRequiredMaterials(playerInventory, item.Recipe)
                 if(playerHaveRequiredMaterials)
                 {
                     this.RemoveRequiredMaterials(playerInventory, item.Recipe);
                     this.inventoryHandler.AddItemByObject(playerInventory.Items, item, activityLog);
                     activityLog.nativeElement.value = item.Name + " crafted and added to inventory\n" + activityLog.nativeElement.value;
+                    player.Experience += item.Experience;
+                    player.Level = this.levelHandler.CalculateLevel(player.Experience);
                     return playerInventory;
                 }
                 else

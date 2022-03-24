@@ -12,6 +12,11 @@
                 <button (click)="Character.Level = Character.Level + 1; UpdateStorage();">+</button>
             </p>
             <p>
+                Experience: {{Character.Experience}}&nbsp;&nbsp;&nbsp;
+                <button (click)="OnDecreaseXPClick()">-</button>
+                <button (click)="OnAddXPClick()">+</button>
+            </p>
+            <p>
                 Currency: {{Character.Currency}}&nbsp;&nbsp;&nbsp;
                 <button (click)="Character.Currency = Character.Currency - 10; UpdateStorage();">-</button>
                 <button (click)="Character.Currency = Character.Currency + 20; UpdateStorage();">+</button>
@@ -56,6 +61,8 @@
                         <th>Name</th>
                         <th>Type</th>
                         <th>Lvl Req</th>
+                        <th>Gather Rate</th>
+                        <th>Experience</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -66,6 +73,8 @@
                         </td>
                         <td>{{ItemType[item.Type]}}</td>
                         <td>{{item.LevelRequirement}}</td>
+                        <td>{{item.Rate}} seconds</td>
+                        <td>Grants {{item.Experience}}xp</td>
                     </tr>
                 </tbody>
             </table>
@@ -80,6 +89,7 @@
                         <th>Type</th>
                         <th>Lvl Req</th>
                         <th>Recipe</th>
+                        <th>Experience</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -95,6 +105,7 @@
                                 {{recipeItem.Item.Name}} x {{recipeItem.Count}}
                             </p>
                         </td>
+                        <td>Grants {{item.Experience}}xp</td>
                     </tr>
                 </tbody>
             </table>

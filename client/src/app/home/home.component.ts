@@ -8,6 +8,7 @@ import { Craftable } from '../model/items/craftable';
 import { Gatherable } from '../model/items/gatherable';
 import {  ItemType } from '../model/items/item';
 import { DamageType, WeaponType } from '../model/items/weapon';
+import { LevelHandler } from '../model/leveling/level-handler';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +22,7 @@ export class HomeComponent {
 
   Character : any;
   CurrentOnlinePlayers : Character[] | undefined;
+  LevelHandler: LevelHandler;
   GatherHandler: GatherHandler;
   CraftHandler: CraftHandler;
   InventoryHandler: InventoryHandler;
@@ -29,6 +31,7 @@ export class HomeComponent {
   WeaponType = WeaponType;
 
   constructor(private socket: Socket) {
+    this.LevelHandler = new LevelHandler();
     this.GatherHandler = new GatherHandler();
     this.CraftHandler = new CraftHandler();
     this.InventoryHandler = new InventoryHandler();
@@ -86,13 +89,25 @@ export class HomeComponent {
     localStorage.clear();
   }
 
+  OnAddXPClick() {
+    this.Character.Experience = this.Character.Experience + 50;
+    this.Character.Level = this.LevelHandler.CalculateLevel(this.Character.Experience);
+    this.UpdateStorage();
+  }
+
+  OnDecreaseXPClick() {
+    this.Character.Experience -= 50;
+    this.Character.Level = this.LevelHandler.CalculateLevel(this.Character.Experience);
+    this.UpdateStorage();
+  }
+
   GatherItem(item: Gatherable) {
-    this.GatherHandler.GatherItems(item, this.Character.Level, this.Character.Inventory, this.ActivityLog);
+    this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
     this.UpdateStorage();
   }
 
   CraftItem(item: Craftable) {
-    this.CraftHandler.CraftItem(item, this.Character.Level, this.Character.Inventory, this.ActivityLog);
+    this.CraftHandler.CraftItem(item, this.Character, this.Character.Inventory, this.ActivityLog);
     this.UpdateStorage();
   }
 

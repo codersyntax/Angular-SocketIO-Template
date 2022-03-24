@@ -5,11 +5,12 @@ import { Stick } from "./stick";
 import { Stone } from "./stone";
 import { DamageType, Weapon, WeaponType } from "./weapon";
 
-export class Spear implements Item, Craftable, Weapon
+export class WoodenSpear implements Item, Craftable, Weapon
 {
-    public Name: string = "Spear";
+    public Name: string = "Wooden Spear";
+    public Experience: number = 48;
     public Type: ItemType = ItemType.Weapon;
-    public Description: string = "Its a spear...";
+    public Description: string = "Its a wooden spear...";
     public Value: number = 3;
     public IsRawMaterial: boolean = false;
     public LevelRequirement: number = 3;
@@ -17,4 +18,5 @@ export class Spear implements Item, Craftable, Weapon
     public DamageType: DamageType = DamageType.Physical;
     public WeaponType: WeaponType = WeaponType.Melee;
     public Recipe: RecipeItem[] = [new RecipeItem(new Stone(), 1), new RecipeItem(new Stick(), 2)];
+    public CraftTime: number = 3;
 }

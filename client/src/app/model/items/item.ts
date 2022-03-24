@@ -1,5 +1,6 @@
 export abstract class Item {
     public Name!: string;
+    public Experience!: number;
     public Type!: ItemType;
     public Description!: string;
     public Value!: number;
@@ -11,5 +12,6 @@ export enum ItemType {
     Material,
     Consumable,
     Weapon,
-    Armor
+    Armor,
+    Tool
 }
