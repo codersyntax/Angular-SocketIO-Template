@@ -47,6 +47,58 @@
                 </tbody>
             </table>
         </div>
+
+        <button class="accordion" (click)="OnSectionClick($event)">Gather</button>
+        <div class="panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Lvl Req</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of GatherHandler.GatherableItems">
+                        <td>
+                            <button (click)="GatherItem(item)">Gather</button>&nbsp;
+                            {{item.Name}}
+                        </td>
+                        <td>{{ItemType[item.Type]}}</td>
+                        <td>{{item.LevelRequirement}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="accordion" (click)="OnSectionClick($event)">Craft</button>
+        <div class="panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Lvl Req</th>
+                        <th>Recipe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of CraftHandler.CraftableItems">
+                        <td>
+                            <button (click)="CraftItem(item)">Craft</button>&nbsp;
+                            {{item.Name}}
+                        </td>
+                        <td>{{ItemType[item.Type]}}</td>
+                        <td>{{item.LevelRequirement}}</td>
+                        <td>
+                            <p *ngFor="let recipeItem of item.Recipe">
+                                {{recipeItem.Item.Name}} x {{recipeItem.Count}}
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         
         <button class="accordion" (click)="OnSectionClick($event)">Armory</button>
         <div class="panel">
@@ -56,7 +108,6 @@
                         <td>
                             <button (click)="RemoveItemFromArmory(armoryItem.Weapon.Name)">-</button>
                             <button (click)="AddItemToArmory(armoryItem.Weapon.Name)">+</button>
-                            <button (click)="CraftItem(armoryItem.Weapon)">Craft</button>
                         </td>
                         <td>
                             Name: {{armoryItem.Weapon.Name}}<br/>

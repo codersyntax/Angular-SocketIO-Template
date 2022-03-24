@@ -1,4 +1,10 @@
+import { ItemType } from "./item";
+
 export abstract class Gatherable {
-    public Name!: string;
-    public LevelRequirement!: number;
+  public Name!: string;
+  public Type!: ItemType;
+  public LevelRequirement!: number;
+  public Description!: string;
+  public Value!: number;
+  public IsRawMaterial!: boolean;
   }

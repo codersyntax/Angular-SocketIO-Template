@@ -2,9 +2,12 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Character } from '../model/character';
 import { ArmoryHandler } from '../model/combat/armory-handler';
-import { CraftHandler } from '../model/crafting/CraftHandler';
+import { CraftHandler } from '../model/crafting/craft-handler';
+import { GatherHandler } from '../model/gathering/gather-handler';
 import { InventoryHandler } from '../model/inventory/inventory-handler';
-import { Item, ItemType } from '../model/items/item';
+import { Craftable } from '../model/items/craftable';
+import { Gatherable } from '../model/items/gatherable';
+import {  ItemType } from '../model/items/item';
 import { DamageType, WeaponType } from '../model/items/weapon';
 
 @Component({
@@ -19,6 +22,7 @@ export class HomeComponent {
 
   Character : any;
   CurrentOnlinePlayers : Character[] | undefined;
+  GatherHandler: GatherHandler;
   CraftHandler: CraftHandler;
   InventoryHandler: InventoryHandler;
   ArmoryHandler: ArmoryHandler;
@@ -27,6 +31,7 @@ export class HomeComponent {
   WeaponType = WeaponType;
 
   constructor(private socket: Socket) {
+    this.GatherHandler = new GatherHandler();
     this.CraftHandler = new CraftHandler();
     this.InventoryHandler = new InventoryHandler();
     this.ArmoryHandler = new ArmoryHandler();
@@ -84,7 +89,12 @@ export class HomeComponent {
     localStorage.clear();
   }
 
-  CraftItem(item: Item) {
+  GatherItem(item: Gatherable) {
+    this.GatherHandler.GatherItems(item, this.Character.Level, this.Character.Inventory, this.ActivityLog);
+    this.UpdateStorage();
+  }
+
+  CraftItem(item: Craftable) {
     this.CraftHandler.CraftItem(item, this.Character.Level, this.Character.Inventory, this.Character.Armory, this.ActivityLog);
     this.UpdateStorage();
   }
@@ -107,7 +117,7 @@ export class HomeComponent {
   }
 
   RemoveItemFromInventory(itemName: string) {
-    this.Character.Inventory.Items = this.InventoryHandler.RemoveItem(this.Character.Inventory, itemName, this.ActivityLog);
+    this.Character.Inventory.Items = this.InventoryHandler.RemoveItem(this.Character.Inventory.Items, itemName, this.ActivityLog);
     this.UpdateStorage();
   }
 }

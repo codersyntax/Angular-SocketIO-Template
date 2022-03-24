@@ -1,4 +1,5 @@
 export abstract class Weapon {
+  public Name!: string;
   public LevelRequirement!: number;
   public DamageAmount!: number;
   public DamageType!: DamageType;

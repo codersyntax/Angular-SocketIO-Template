@@ -2,18 +2,23 @@ import { ElementRef } from "@angular/core";
 import { Armory } from "../combat/armory";
 import { Inventory } from "../inventory/inventory";
 import { Craftable } from "../items/craftable";
-import { Gatherable } from "../items/gatherable";
-import { Item, ItemType } from "../items/item";
+import { ItemType } from "../items/item";
+import { RecipeItem } from "../items/recipe-item";
+import { Spear } from "../items/spear";
 
 export class CraftHandler {
-    public CraftItem(item: Item, playerLevel: number, playerInventory: Inventory, playerArmory: Armory, activityLog: ElementRef) : Inventory {
+    public CraftableItems: Craftable[] = [
+        new Spear()
+    ];
+
+    public CraftItem(item: Craftable, playerLevel: number, playerInventory: Inventory, playerArmory: Armory, activityLog: ElementRef) : Inventory {
         if(item.Type != ItemType.Material)
         {
-            if(item.LevelRequirement >= playerLevel) {
-                var playerHaveRequiredMaterials = this.HasRequiredMaterials(playerInventory, (item as unknown as Craftable).Recipe)
+            if(item.LevelRequirement <= playerLevel) {
+                var playerHaveRequiredMaterials = this.HasRequiredMaterials(playerInventory, item.Recipe)
                 if(playerHaveRequiredMaterials)
                 {
-                    this.RemoveRequiredMaterials(playerInventory, (item as unknown as Craftable).Recipe);
+                    this.RemoveRequiredMaterials(playerInventory, item.Recipe);
                     this.AddCraftedItem(playerArmory, playerInventory, item);
                     activityLog.nativeElement.value = item.Name + " crafted and added to inventory\n" + activityLog.nativeElement.value;
                     return playerInventory;
@@ -31,11 +36,15 @@ export class CraftHandler {
         return playerInventory;
     }
 
-    private HasRequiredMaterials(inventory: Inventory, recipe: Gatherable[]) : boolean {
+    private HasRequiredMaterials(inventory: Inventory, recipe: RecipeItem[]) : boolean {
         for(var i = 0; i < recipe.length; i++)
         {
-            var requiredMaterialIndex = inventory.Items.findIndex(item => item.Item.Name == recipe[i].Name);
-            var requiredNumberOfMaterialsForRecipe = recipe.filter(item => item.Name == recipe[i].Name).length;
+            var requiredMaterialIndex = inventory.Items.findIndex(item => item.Item.Name == recipe[i].Item.Name);
+            if(requiredMaterialIndex < 0)
+            {
+                return false;
+            }
+            var requiredNumberOfMaterialsForRecipe = recipe.filter(item => item.Item.Name == recipe[i].Item.Name).length;
             if(inventory.Items[requiredMaterialIndex].Count < requiredNumberOfMaterialsForRecipe)
             {
                 return false;
@@ -44,18 +53,18 @@ export class CraftHandler {
         return true;
     }
 
-    private RemoveRequiredMaterials(inventory: Inventory, recipe: Gatherable[]) {
+    private RemoveRequiredMaterials(inventory: Inventory, recipe: RecipeItem[]) {
         for(var i = 0; i < recipe.length; i++)
         {
-            var requiredMaterialIndex = inventory.Items.findIndex(item => item.Item.Name == recipe[i].Name);
+            var requiredMaterialIndex = inventory.Items.findIndex(item => item.Item.Name == recipe[i].Item.Name);
             inventory.Items[requiredMaterialIndex].Count--;
         }
     }
 
-    private AddCraftedItem(armory: Armory, inventory: Inventory, item: Item) {
+    private AddCraftedItem(armory: Armory, inventory: Inventory, item: Craftable) {
         if(item.Type == ItemType.Weapon) 
         {
-            var itemIndex = armory.Items.findIndex(i => (i.Weapon as unknown as Item).Name == item.Name);
+            var itemIndex = armory.Items.findIndex(i => i.Weapon.Name == item.Name);
             armory.Items[itemIndex].Count++;
         }
         else {
