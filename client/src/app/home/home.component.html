@@ -2,31 +2,54 @@
     <input #logInTextField type="text" (keyup.enter)="onNameEnter(logInTextField.value)" />
 </div>
 <div #characterData *ngIf="Character">
-    <h3>Character Data</h3>
-    <p>Name: {{Character.Name}}</p>
-    <p><button (click)="ResetCharacter();">Reset Character</button></p>
-    <p>
-        <button (click)="Character.Level = Character.Level - 1; UpdateStorage();">-</button>
-        <button (click)="Character.Level = Character.Level + 1; UpdateStorage();">+</button>
-        &nbsp;Level: {{Character.Level}}
-    </p>
-    <p>
-        <button (click)="Character.Currency = Character.Currency - 10; UpdateStorage();">-</button>
-        <button (click)="Character.Currency = Character.Currency + 20; UpdateStorage();">+</button>
-        &nbsp;Currency: {{Character.Currency}}
-    </p>
+    <table>
+        <tr>
+            <td rowspan="2">
+                <h3>Character Data</h3>
+                <p>Name: {{Character.Name}}</p>
+                <p><button (click)="ResetCharacter();">Reset Character</button></p>
+                <p>
+                    <button (click)="Character.Level = Character.Level - 1; UpdateStorage();">-</button>
+                    <button (click)="Character.Level = Character.Level + 1; UpdateStorage();">+</button>
+                    &nbsp;Level: {{Character.Level}}
+                </p>
+                <p>
+                    <button (click)="Character.Currency = Character.Currency - 10; UpdateStorage();">-</button>
+                    <button (click)="Character.Currency = Character.Currency + 20; UpdateStorage();">+</button>
+                    &nbsp;Currency: {{Character.Currency}}
+                </p>
+            </td>
+            <td>
+                <h3>Chat</h3>
+                <p><textarea rows="5" cols="50" #chatTextArea readonly></textarea></p>
+                <p>Message: <input type="text" #messageTextField (keyup.enter)="onChatMessageEnter()" /></p>
+            </td>
+            <td>
+                <h3>Current Online Players</h3>
+                <div *ngFor="let player of CurrentOnlinePlayers">
+                    <p>{{player.Name}}</p>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Character Activity Log</h3>
+                <textarea rows="5" cols="50" #activityLog></textarea>
+            </td>
+            <td>
+                <h3>Save Data</h3>
+                <textarea rows="5" cols="50">{{Character.saveString}}</textarea>
+            </td>
+        </tr>
+    </table>
 
-    <p>
-        <button (click)="AddItemToInventory('Stone')">Add Stone To Inventory</button>
-        <button (click)="AddItemToInventory('Stick')">Add Stick To Inventory</button>
-        <button (click)="RemoveItemFromInventory('Stick')">Remove Stick From Inventory</button>
-        <button (click)="AddItemToInventory('Spear')">Craft Spear</button>
-    </p>
-
+    <h3>Inventory Data</h3>
     <table>
         <thead>
             <tr>
+                <th></th>
                 <th>Name</th>
+                <th>Type</th>
                 <th>Description</th>
                 <th>Value</th>
                 <th>IsRawMaterial</th>
@@ -35,7 +58,12 @@
         </thead>
         <tbody>
             <tr *ngFor="let inventoryItem of Character.Inventory.Items">
+                <td>
+                    <button (click)="RemoveItemFromInventory(inventoryItem.Item.Name)">-</button>
+                    <button (click)="AddItemToInventory(inventoryItem.Item.Name)">+</button>
+                </td>
                 <td>{{inventoryItem.Item.Name}}</td>
+                <td>{{ItemType[inventoryItem.Item.Type]}}</td>
                 <td>{{inventoryItem.Item.Description}}</td>
                 <td>{{inventoryItem.Item.Value}}</td>
                 <td>{{inventoryItem.Item.IsRawMaterial}}</td>
@@ -44,14 +72,38 @@
         </tbody>
     </table>
 
-    <p>Character Activity Log</p>
-    <textarea rows="5" cols="50" #activityLog></textarea>
-
-    <p>Save Data</p>
-    <textarea rows="5" cols="50">{{Character.saveString}}</textarea>
-
-    <h3>Current Online Players</h3>
-    <div *ngFor="let player of CurrentOnlinePlayers">
-        <p>{{player.Name}}</p>
-    </div>
+    <h3>Armory Data</h3>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Level Req.</th>
+                <th>Damage Amount</th>
+                <th>Damage Type</th>
+                <th>Weapon Type</th>
+                <th>Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let armoryItem of Character.Armory.Items">
+                <td>
+                    <button (click)="RemoveItemFromArmory(armoryItem.Weapon.Name)">-</button>
+                    <button (click)="AddItemToArmory(armoryItem.Weapon.Name)">+</button>
+                </td>
+                <td>{{armoryItem.Weapon.Name}}</td>
+                <td>{{ItemType[armoryItem.Weapon.Type]}}</td>
+                <td>{{armoryItem.Weapon.Description}}</td>
+                <td>{{armoryItem.Weapon.Value}}</td>
+                <td>{{armoryItem.Weapon.LevelRequirement}}</td>
+                <td>{{armoryItem.Weapon.DamageAmount}}</td>
+                <td>{{DamageType[armoryItem.Weapon.DamageType]}}</td>
+                <td>{{WeaponType[armoryItem.Weapon.WeaponType]}}</td>
+                <td>{{armoryItem.Count}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

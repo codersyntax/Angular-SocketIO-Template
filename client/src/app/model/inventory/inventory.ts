@@ -6,7 +6,6 @@ import { InventoryItem } from "./inventory-item";
 export class Inventory {
     public Items: InventoryItem[] = [
         new InventoryItem(new Stone()),
-        new InventoryItem(new Stick()),
-        new InventoryItem(new Spear())
+        new InventoryItem(new Stick())
     ];
 }
