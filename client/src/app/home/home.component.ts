@@ -53,6 +53,17 @@ export class HomeComponent {
     })
   }
 
+  public OnSectionClick(event: any) {
+    var previousActiveElement = event.target.parentElement.querySelector(".active");
+    if(previousActiveElement)
+    {
+      previousActiveElement.classList.remove("active");
+      previousActiveElement.nextSibling.style.display = "none";
+    }
+    event.target.className += " active";
+    event.target.nextSibling.style.display = "block";
+  }
+
   public onChatMessageEnter() {
     var chatMessage = new Date().toLocaleTimeString() + " " + this.Character?.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
     this.socket.emit("chatMessage", chatMessage);
