@@ -24,15 +24,17 @@ io.on("connection", socket => {
     });
     socket.on("disconnect", () => {
         var loggedOutCharacter = characters.filter(i => i.SocketId == socket.id);
-        console.log(loggedOutCharacter[0].Name + " logging out...");
+        if(loggedOutCharacter.length == 1) {
+            console.log(loggedOutCharacter[0].Name + " logging out...");
+        }
         characters = characters.filter(i => i.SocketId != socket.id);
-        console.log(characters);
+        console.log("Remaining players online: " + characters.length);
         io.emit("currentOnlineCharacters", characters);
     })
 });
 
 http.listen(5000, () => {
-    console.log('App listening....');
+    console.log('Server starting up.... App listening on PORT 5000.');
 });
 
 //TODO Persist character data somewhere

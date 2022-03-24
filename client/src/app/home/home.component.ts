@@ -1,6 +1,7 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Character } from '../model/character';
+import { InventoryHandler } from '../model/inventory/inventory-handler';
 
 @Component({
   selector: 'app-home',
@@ -8,17 +9,23 @@ import { Character } from '../model/character';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  Character : Character | undefined;
+  @ViewChild('activityLog', {static: false}) public ActivityLog!: ElementRef;
+  Character : any;
   CurrentOnlinePlayers : Character[] | undefined;
+  InventoryHandler: InventoryHandler;
 
   constructor(private socket: Socket) {
+    this.InventoryHandler = new InventoryHandler();
+    //TEMPORARY STORAGE
+    var save = localStorage.getItem('character');
+    if(save)
+    {
+      this.Character = JSON.parse(save);
+      this.socket.emit("userSubmittedPlayerName", this.Character);
+    }
    }
 
   public ngAfterViewInit() {
-    this.socket.on('successful-transmission', (data: any) => {
-      console.log("Returned data from server: ", data);
-    });
-
     this.socket.on('updateCharacterConnectionString', (socketId: any) => {
       this.Character!.SocketId = socketId;
     });
@@ -33,7 +40,22 @@ export class HomeComponent {
     this.socket.emit("userSubmittedPlayerName", this.Character);
   }
 
-  ngOnDestroy(): void {
-    this.socket.emit('logCharacterOut', this.Character);
+  UpdateStorage() {
+    localStorage.setItem('character', JSON.stringify(this.Character));
+  }
+
+  ResetCharacter() {
+    this.Character = undefined;
+    localStorage.clear();
+  }
+
+  AddItemToInventory(itemName: string) {
+    this.Character.Inventory.Items = this.InventoryHandler.AddItem(this.Character.Inventory.Items, this.Character.Level, itemName, this.ActivityLog);
+    this.UpdateStorage();
+  }
+
+  RemoveItemFromInventory(itemName: string) {
+    this.Character.Inventory.Items = this.InventoryHandler.RemoveItem(this.Character.Inventory.Items, this.Character.Level, itemName, this.ActivityLog);
+    this.UpdateStorage();
   }
 }
