@@ -2,8 +2,9 @@ import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Character } from '../model/character';
 import { ArmoryHandler } from '../model/combat/armory-handler';
+import { CraftHandler } from '../model/crafting/CraftHandler';
 import { InventoryHandler } from '../model/inventory/inventory-handler';
-import { ItemType } from '../model/items/item';
+import { Item, ItemType } from '../model/items/item';
 import { DamageType, WeaponType } from '../model/items/weapon';
 
 @Component({
@@ -18,6 +19,7 @@ export class HomeComponent {
 
   Character : any;
   CurrentOnlinePlayers : Character[] | undefined;
+  CraftHandler: CraftHandler;
   InventoryHandler: InventoryHandler;
   ArmoryHandler: ArmoryHandler;
   ItemType = ItemType;
@@ -25,6 +27,7 @@ export class HomeComponent {
   WeaponType = WeaponType;
 
   constructor(private socket: Socket) {
+    this.CraftHandler = new CraftHandler();
     this.InventoryHandler = new InventoryHandler();
     this.ArmoryHandler = new ArmoryHandler();
     //TEMPORARY STORAGE
@@ -51,7 +54,7 @@ export class HomeComponent {
   }
 
   public onChatMessageEnter() {
-    var chatMessage = new Date().toLocaleTimeString() + " " + this.Character.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
+    var chatMessage = new Date().toLocaleTimeString() + " " + this.Character?.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
     this.socket.emit("chatMessage", chatMessage);
     this.MessageTextField.nativeElement.value = "";
   }
@@ -70,6 +73,11 @@ export class HomeComponent {
     localStorage.clear();
   }
 
+  CraftItem(item: Item) {
+    this.CraftHandler.CraftItem(item, this.Character.Level, this.Character.Inventory, this.Character.Armory, this.ActivityLog);
+    this.UpdateStorage();
+  }
+
   AddItemToArmory(itemName: string) {
     this.Character.Armory.Items = this.ArmoryHandler.AddWeapon(this.Character.Armory.Items, itemName, this.ActivityLog);
     this.UpdateStorage();
@@ -81,12 +89,14 @@ export class HomeComponent {
   }
 
   AddItemToInventory(itemName: string) {
-    this.Character.Inventory.Items = this.InventoryHandler.AddItem(this.Character.Inventory.Items, this.Character.Level, itemName, this.ActivityLog);
+    console.log(itemName);
+    this.Character.Inventory.Items = this.InventoryHandler.AddItem(this.Character.Inventory.Items, itemName, this.ActivityLog);
+    console.log(this.Character);
     this.UpdateStorage();
   }
 
   RemoveItemFromInventory(itemName: string) {
-    this.Character.Inventory.Items = this.InventoryHandler.RemoveItem(this.Character.Inventory.Items, this.Character.Level, itemName, this.ActivityLog);
+    this.Character.Inventory.Items = this.InventoryHandler.RemoveItem(this.Character.Inventory, itemName, this.ActivityLog);
     this.UpdateStorage();
   }
 }

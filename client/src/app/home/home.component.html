@@ -93,6 +93,7 @@
                 <td>
                     <button (click)="RemoveItemFromArmory(armoryItem.Weapon.Name)">-</button>
                     <button (click)="AddItemToArmory(armoryItem.Weapon.Name)">+</button>
+                    <button (click)="CraftItem(armoryItem.Weapon)">Craft</button>
                 </td>
                 <td>{{armoryItem.Weapon.Name}}</td>
                 <td>{{ItemType[armoryItem.Weapon.Type]}}</td>
