@@ -1,5 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { Socket } from 'ngx-socket-io';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',

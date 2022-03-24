@@ -1,7 +1,6 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Character } from '../model/character';
-import { ArmoryHandler } from '../model/combat/armory-handler';
 import { CraftHandler } from '../model/crafting/craft-handler';
 import { GatherHandler } from '../model/gathering/gather-handler';
 import { InventoryHandler } from '../model/inventory/inventory-handler';
@@ -25,7 +24,6 @@ export class HomeComponent {
   GatherHandler: GatherHandler;
   CraftHandler: CraftHandler;
   InventoryHandler: InventoryHandler;
-  ArmoryHandler: ArmoryHandler;
   ItemType = ItemType;
   DamageType = DamageType;
   WeaponType = WeaponType;
@@ -34,7 +32,6 @@ export class HomeComponent {
     this.GatherHandler = new GatherHandler();
     this.CraftHandler = new CraftHandler();
     this.InventoryHandler = new InventoryHandler();
-    this.ArmoryHandler = new ArmoryHandler();
     //TEMPORARY STORAGE
     var save = localStorage.getItem('character');
     if(save)
@@ -95,17 +92,7 @@ export class HomeComponent {
   }
 
   CraftItem(item: Craftable) {
-    this.CraftHandler.CraftItem(item, this.Character.Level, this.Character.Inventory, this.Character.Armory, this.ActivityLog);
-    this.UpdateStorage();
-  }
-
-  AddItemToArmory(itemName: string) {
-    this.Character.Armory.Items = this.ArmoryHandler.AddWeapon(this.Character.Armory.Items, itemName, this.ActivityLog);
-    this.UpdateStorage();
-  }
-
-  RemoveItemFromArmory(itemName: string) {
-    this.Character.Armory.Items = this.ArmoryHandler.RemoveWeapon(this.Character.Armory.Items, itemName, this.ActivityLog);
+    this.CraftHandler.CraftItem(item, this.Character.Level, this.Character.Inventory, this.ActivityLog);
     this.UpdateStorage();
   }
 
