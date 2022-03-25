@@ -6,7 +6,7 @@ import { GatherHandler } from '../model/gathering/gather-handler';
 import { InventoryHandler } from '../model/inventory/inventory-handler';
 import { Craftable } from '../model/items/craftable-items/craftable';
 import { Gatherable } from '../model/items/gatherable-items/gatherable';
-import {  Item, ItemType } from '../model/items/item';
+import { ItemType } from '../model/items/item';
 import { DamageType, WeaponType } from '../model/items/craftable-items/weapon';
 import { LevelHandler } from '../model/leveling/level-handler';
 
@@ -120,11 +120,16 @@ export class HomeComponent {
     else {
       if(this.GatherHandler.HasRequiredTool(item.RequiredTool, this.Character.Inventory))
       {
-        this.IsBusy = true;
-        this.GlobalInterval = setInterval(() => {
-          this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
-          this.UpdateStorage();
-        }, item.Rate * 1000)
+        if(item.LevelRequirement <= this.Character.Level) {
+          this.IsBusy = true;
+          this.GlobalInterval = setInterval(() => {
+            this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
+            this.UpdateStorage();
+          }, item.Rate * 1000)
+        }
+        else {
+          this.ActivityLog.nativeElement.value = "You are not the required level to gather " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
+        }
       }
       else {
         this.IsBusy = false;
@@ -134,14 +139,40 @@ export class HomeComponent {
     }
   }
 
-  CancelGather() {
-    clearInterval(this.GlobalInterval);
-    this.GlobalInterval = undefined;
+  CraftItem(item: Craftable) {
+    if(this.IsBusy)
+    {
+      this.IsBusy = false;
+      if(this.GlobalInterval != undefined) {
+        clearInterval(this.GlobalInterval);
+        this.GlobalInterval = undefined;
+      }
+    }
+    else {
+      if(this.CraftHandler.HasRequiredMaterials(this.Character.Inventory, item.Recipe))
+      {
+        if(item.LevelRequirement <= this.Character.Level) {
+          this.IsBusy = true;
+          this.GlobalInterval = setInterval(() => {
+            this.CraftHandler.CraftItem(item, this.Character, this.Character.Inventory, this.ActivityLog);
+            this.UpdateStorage();
+          }, item.CraftTime * 1000)
+        }
+        else {
+          this.ActivityLog.nativeElement.value = "You are not the required level to craft " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
+        }
+      }
+      else {
+        this.IsBusy = false;
+        this.ActivityLog.nativeElement.value = "You do not possess the required materials to craft " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
+      }
+
+    }
   }
 
-  CraftItem(item: Craftable) {
-    this.CraftHandler.CraftItem(item, this.Character, this.Character.Inventory, this.ActivityLog);
-    this.UpdateStorage();
+  CancelAction() {
+    clearInterval(this.GlobalInterval);
+    this.GlobalInterval = undefined;
   }
 
   AddItemToInventory(itemName: string) {

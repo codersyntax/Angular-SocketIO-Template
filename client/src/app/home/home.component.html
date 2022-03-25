@@ -96,7 +96,7 @@
                         <tr *ngFor="let item of GatherHandler.GatherableItems">
                             <ng-container *ngIf="Character.Level >= item.LevelRequirement">
                                 <td title="{{item.Description}}">
-                                    <button *ngIf="IsBusy" (click)="CancelGather(); IsBusy = false;">Cancel</button><button *ngIf="!IsBusy" (click)="GatherItem(item)">Gather</button>&nbsp;
+                                    <button *ngIf="IsBusy" (click)="CancelAction(); IsBusy = false;">Cancel</button><button *ngIf="!IsBusy" (click)="GatherItem(item)">Gather</button>&nbsp;
                                     {{item.Name}}
                                 </td>
                                 <td>{{ItemType[item.Type]}}</td>
@@ -125,7 +125,7 @@
                         <tr *ngFor="let item of CraftHandler.CraftableItems">
                             <ng-container *ngIf="Character.Level >= item.LevelRequirement">
                                 <td title="{{item.Description}}">
-                                    <button (click)="CraftItem(item)">Craft</button>&nbsp;
+                                    <button *ngIf="IsBusy" (click)="CancelAction(); IsBusy = false;">Cancel</button><button *ngIf="!IsBusy" (click)="CraftItem(item)">Craft</button>&nbsp;
                                     {{item.Name}}
                                 </td>
                                 <td>{{ItemType[item.Type]}}</td>

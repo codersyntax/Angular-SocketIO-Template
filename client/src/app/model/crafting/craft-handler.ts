@@ -46,7 +46,7 @@ export class CraftHandler {
         return playerInventory;
     }
 
-    private HasRequiredMaterials(inventory: Inventory, recipe: RecipeItem[]) : boolean {
+    public HasRequiredMaterials(inventory: Inventory, recipe: RecipeItem[]) : boolean {
         for(var i = 0; i < recipe.length; i++)
         {
             var requiredMaterialIndex = inventory.Items.findIndex(item => item.Item.Name == recipe[i].Item.Name);
