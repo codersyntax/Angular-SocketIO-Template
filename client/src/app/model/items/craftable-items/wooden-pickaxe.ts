@@ -1,7 +1,7 @@
 import { Craftable } from "./craftable";
-import { Item, ItemType } from "./item";
+import { Item, ItemType } from "../item";
 import { RecipeItem } from "./recipe-item";
-import { Stick } from "./stick";
+import { Stick } from "../gatherable-items/stick";
 import { Tool, ToolType } from "./tool";
 
 export class WoodenPickaxe implements Item, Tool, Craftable {
@@ -17,5 +17,5 @@ export class WoodenPickaxe implements Item, Tool, Craftable {
     public Recipe: RecipeItem[] = [
         new RecipeItem(new Stick(), 3)
     ];
-    public CraftTime: number = 30;
+    public CraftTime: number = 10;
 }

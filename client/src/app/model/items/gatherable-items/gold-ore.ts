@@ -1,5 +1,6 @@
 import { Gatherable } from "./gatherable";
-import { Item, ItemType } from "./item";
+import { Item, ItemType } from "../item";
+import { Tool } from "../craftable-items/tool";
 
 export class GoldOre implements Item, Gatherable 
 {
@@ -10,5 +11,6 @@ export class GoldOre implements Item, Gatherable
     public Value: number = 10;
     public IsRawMaterial: boolean = true;
     public LevelRequirement: number = 10;
+    public RequiredTool: Tool | undefined = undefined;
     public Rate: number = 16;
 }

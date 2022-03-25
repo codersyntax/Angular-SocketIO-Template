@@ -4,10 +4,10 @@ import { Character } from '../model/character';
 import { CraftHandler } from '../model/crafting/craft-handler';
 import { GatherHandler } from '../model/gathering/gather-handler';
 import { InventoryHandler } from '../model/inventory/inventory-handler';
-import { Craftable } from '../model/items/craftable';
-import { Gatherable } from '../model/items/gatherable';
-import {  ItemType } from '../model/items/item';
-import { DamageType, WeaponType } from '../model/items/weapon';
+import { Craftable } from '../model/items/craftable-items/craftable';
+import { Gatherable } from '../model/items/gatherable-items/gatherable';
+import {  Item, ItemType } from '../model/items/item';
+import { DamageType, WeaponType } from '../model/items/craftable-items/weapon';
 import { LevelHandler } from '../model/leveling/level-handler';
 
 @Component({
@@ -111,24 +111,31 @@ export class HomeComponent {
   GatherItem(item: Gatherable) {
     if(this.IsBusy)
     {
+      this.IsBusy = false;
       if(this.GlobalInterval != undefined) {
         clearInterval(this.GlobalInterval);
         this.GlobalInterval = undefined;
       }
     }
     else {
-      this.GlobalInterval = setInterval(() => {
-        this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
-        this.UpdateStorage();
-        console.log("Gathered item");
-        console.log(this.Character);
-      }, item.Rate * 1000)
+      if(this.GatherHandler.HasRequiredTool(item.RequiredTool, this.Character.Inventory))
+      {
+        this.IsBusy = true;
+        this.GlobalInterval = setInterval(() => {
+          this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
+          this.UpdateStorage();
+        }, item.Rate * 1000)
+      }
+      else {
+        this.IsBusy = false;
+        this.ActivityLog.nativeElement.value = "You do not possess the required tool to gather " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
+      }
+
     }
   }
 
   CancelGather() {
     clearInterval(this.GlobalInterval);
-    console.log("Clearing current timer");
     this.GlobalInterval = undefined;
   }
 

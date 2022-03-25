@@ -42,7 +42,7 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let inventoryItem of Character.Inventory.Items">
-                            <td>{{inventoryItem.Item.Name}}</td>
+                            <td title="{{inventoryItem.Item.Description}}">{{inventoryItem.Item.Name}}</td>
                             <td>{{ItemType[inventoryItem.Item.Type]}}</td>
                             <td>{{inventoryItem.Item.Description}}</td>
                             <td>{{inventoryItem.Item.Value}}</td>
@@ -95,8 +95,8 @@
                     <tbody>
                         <tr *ngFor="let item of GatherHandler.GatherableItems">
                             <ng-container *ngIf="Character.Level >= item.LevelRequirement">
-                                <td>
-                                    <button *ngIf="IsBusy" (click)="CancelGather(); IsBusy = false">Cancel</button><button *ngIf="!IsBusy" (click)="GatherItem(item); IsBusy = true">Gather</button>&nbsp;
+                                <td title="{{item.Description}}">
+                                    <button *ngIf="IsBusy" (click)="CancelGather(); IsBusy = false;">Cancel</button><button *ngIf="!IsBusy" (click)="GatherItem(item)">Gather</button>&nbsp;
                                     {{item.Name}}
                                 </td>
                                 <td>{{ItemType[item.Type]}}</td>
@@ -124,7 +124,7 @@
                     <tbody>
                         <tr *ngFor="let item of CraftHandler.CraftableItems">
                             <ng-container *ngIf="Character.Level >= item.LevelRequirement">
-                                <td>
+                                <td title="{{item.Description}}">
                                     <button (click)="CraftItem(item)">Craft</button>&nbsp;
                                     {{item.Name}}
                                 </td>

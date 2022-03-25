@@ -1,4 +1,4 @@
-import { ItemType } from "./item";
+import { ItemType } from "../item";
 import { RecipeItem } from "./recipe-item";
 
 export abstract class Craftable {

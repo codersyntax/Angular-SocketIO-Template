@@ -2,19 +2,21 @@ import { ElementRef } from "@angular/core";
 import { Character } from "../character";
 import { Inventory } from "../inventory/inventory";
 import { InventoryHandler } from "../inventory/inventory-handler";
-import { Craftable } from "../items/craftable";
 import { ItemType } from "../items/item";
-import { RecipeItem } from "../items/recipe-item";
-import { WoodenPickaxe } from "../items/wooden-pickaxe";
-import { WoodenSpear } from "../items/wooden-spear";
+import { Craftable } from "../items/craftable-items/craftable";
+import { RecipeItem } from "../items/craftable-items/recipe-item";
+import { WoodenPickaxe } from "../items/craftable-items/wooden-pickaxe";
+import { WoodenSpear } from "../items/craftable-items/wooden-spear";
 import { LevelHandler } from "../leveling/level-handler";
+import { StonePickaxe } from "../items/craftable-items/stone-pickaxe";
 
 export class CraftHandler {
     private levelHandler = new LevelHandler();
     private inventoryHandler = new InventoryHandler();
     public CraftableItems: Craftable[] = [
+        new WoodenPickaxe(),
         new WoodenSpear(),
-        new WoodenPickaxe()
+        new StonePickaxe()
     ];
 
     public CraftItem(item: Craftable, player: Character, playerInventory: Inventory, activityLog: ElementRef) : Inventory {

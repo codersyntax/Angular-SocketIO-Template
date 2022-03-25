@@ -1,5 +1,7 @@
 import { Gatherable } from "./gatherable";
-import { Item, ItemType } from "./item";
+import { Item, ItemType } from "../item";
+import { Tool } from "../craftable-items/tool";
+import { WoodenPickaxe } from "../craftable-items/wooden-pickaxe";
 
 export class Stone implements Item, Gatherable 
 {
@@ -10,5 +12,6 @@ export class Stone implements Item, Gatherable
     public Value: number = 1;
     public IsRawMaterial: boolean = true;
     public LevelRequirement: number = 1;
+    public RequiredTool: Tool | undefined = new WoodenPickaxe();
     public Rate: number = 6;
 }

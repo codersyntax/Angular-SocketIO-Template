@@ -2,13 +2,14 @@ import { ElementRef } from "@angular/core";
 import { Character } from "../character";
 import { Inventory } from "../inventory/inventory";
 import { InventoryHandler } from "../inventory/inventory-handler";
-import { InventoryItem } from "../inventory/inventory-item";
-import { Gatherable } from "../items/gatherable";
-import { GoldOre } from "../items/gold-ore";
+import { Gatherable } from "../items/gatherable-items/gatherable";
 import { ItemType } from "../items/item";
-import { Stick } from "../items/stick";
-import { Stone } from "../items/stone";
+import { Stick } from "../items/gatherable-items/stick";
+import { Stone } from "../items/gatherable-items/stone";
+import { GoldOre } from "../items/gatherable-items/gold-ore";
+import { Tool } from "../items/craftable-items/tool";
 import { LevelHandler } from "../leveling/level-handler";
+import { CopperOre } from "../items/gatherable-items/copper-ore";
 
 export class GatherHandler {
     private levelHandler = new LevelHandler();
@@ -16,6 +17,7 @@ export class GatherHandler {
     public GatherableItems: Gatherable[] = [
         new Stick(),
         new Stone(),
+        new CopperOre(),
         new GoldOre()
     ];
 
@@ -34,5 +36,12 @@ export class GatherHandler {
             }
         }
         return playerInventory;
+    }
+
+    public HasRequiredTool(requiredTool: Tool | undefined, playerInventory: Inventory) {
+        if(requiredTool == undefined) return true;
+        var playerTool = playerInventory.Items.filter(item => item.Item.Name == requiredTool.Name);
+        if(playerTool.length > 0) return true;
+        return false;
     }
 }

@@ -1,5 +1,6 @@
 import { Gatherable } from "./gatherable";
-import { Item, ItemType } from "./item";
+import { Item, ItemType } from "../item";
+import { Tool } from "../craftable-items/tool";
 
 export class Stick implements Item, Gatherable 
 {
@@ -9,6 +10,7 @@ export class Stick implements Item, Gatherable
     public Description: string = "Its a stick...";
     public Value: number = 1;
     public IsRawMaterial: boolean = true;
+    public RequiredTool: Tool | undefined = undefined;
     public LevelRequirement: number = 0;
     public Rate: number = 4;
 }

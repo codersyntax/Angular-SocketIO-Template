@@ -1,8 +1,7 @@
 import { Craftable } from "./craftable";
-import { Item, ItemType } from "./item";
+import { Item, ItemType } from "../item";
 import { RecipeItem } from "./recipe-item";
-import { Stick } from "./stick";
-import { Stone } from "./stone";
+import { Stick } from "../gatherable-items/stick";
 import { DamageType, Weapon, WeaponType } from "./weapon";
 
 export class WoodenSpear implements Item, Craftable, Weapon
@@ -17,6 +16,6 @@ export class WoodenSpear implements Item, Craftable, Weapon
     public DamageAmount: number = 4;
     public DamageType: DamageType = DamageType.Physical;
     public WeaponType: WeaponType = WeaponType.Melee;
-    public Recipe: RecipeItem[] = [new RecipeItem(new Stone(), 1), new RecipeItem(new Stick(), 2)];
-    public CraftTime: number = 30;
+    public Recipe: RecipeItem[] = [new RecipeItem(new Stick(), 4)];
+    public CraftTime: number = 15;
 }

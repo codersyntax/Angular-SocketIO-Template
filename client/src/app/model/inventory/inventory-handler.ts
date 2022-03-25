@@ -1,14 +1,16 @@
 import { ElementRef } from "@angular/core";
-import { GoldOre } from "../items/gold-ore";
 import { Item } from "../items/item";
-import { Stick } from "../items/stick";
-import { Stone } from "../items/stone";
 import { InventoryItem } from "./inventory-item";
+import { Stick } from "../items/gatherable-items/stick";
+import { Stone } from "../items/gatherable-items/stone";
+import { GoldOre } from "../items/gatherable-items/gold-ore";
+import { CopperOre } from "../items/gatherable-items/copper-ore";
 
 export class InventoryHandler {
     public InventoryOptions: Item[] = [
         new Stick(),
         new Stone(),
+        new CopperOre(),
         new GoldOre()
     ]
 
