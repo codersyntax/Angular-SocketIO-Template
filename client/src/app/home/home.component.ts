@@ -4,7 +4,6 @@ import { Character } from '../model/character/character';
 import { Craftable } from '../model/items/craftable-items/craftable';
 import { Gatherable } from '../model/items/gatherable-items/gatherable';
 import { ItemType } from '../model/items/item';
-import { DamageType, WeaponType } from '../model/items/craftable-items/weapon';
 import { CharacterHandler } from '../model/character/character-handler';
 
 @Component({
@@ -23,9 +22,6 @@ export class HomeComponent {
   GlobalInterval: any;
   CurrentOnlinePlayers : Character[] | undefined;
   ItemType = ItemType;
-  DamageType = DamageType;
-  WeaponType = WeaponType;
-  TimerAmount: number = 100;
 
   constructor(private socket: Socket) {
     //TEMPORARY STORAGE
