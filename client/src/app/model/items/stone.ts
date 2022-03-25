@@ -10,5 +10,5 @@ export class Stone implements Item, Gatherable
     public Value: number = 1;
     public IsRawMaterial: boolean = true;
     public LevelRequirement: number = 1;
-    public Rate: number = 2;
+    public Rate: number = 6;
 }

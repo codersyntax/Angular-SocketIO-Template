@@ -10,5 +10,5 @@ export class GoldOre implements Item, Gatherable
     public Value: number = 10;
     public IsRawMaterial: boolean = true;
     public LevelRequirement: number = 10;
-    public Rate: number = 6;
+    public Rate: number = 16;
 }

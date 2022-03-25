@@ -37,7 +37,7 @@ export class InventoryHandler {
         }
         else {
             for(var i = 0; i < items.length; i++) {
-                if(items[i].Item == item) {
+                if(items[i].Item.Name == item.Name) {
                     items[i].Count++;
                     activityLog.nativeElement.value = items[i].Item.Name + " add to inventory\n" + activityLog.nativeElement.value;
                     break;

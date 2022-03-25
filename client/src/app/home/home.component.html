@@ -1,158 +1,146 @@
-<div #logIn *ngIf="!Character">
-    <input #logInTextField type="text" (keyup.enter)="onNameEnter(logInTextField.value)" />
-</div>
-<div #characterData *ngIf="Character">
-    <div class="accordion-container">
-        <button class="accordion" (click)="OnSectionClick($event)">Character Data</button>
-        <div class="panel">
-            <p>Name: {{Character.Name}} <button (click)="ResetCharacter();">Reset Character</button></p>
-            <p>
-                Level: {{Character.Level}}&nbsp;&nbsp;&nbsp;
-                <button (click)="Character.Level = Character.Level - 1; UpdateStorage();">-</button>
-                <button (click)="Character.Level = Character.Level + 1; UpdateStorage();">+</button>
-            </p>
-            <p>
-                Experience: {{Character.Experience}}&nbsp;&nbsp;&nbsp;
-                <button (click)="OnDecreaseXPClick()">-</button>
-                <button (click)="OnAddXPClick()">+</button>
-            </p>
-            <p>
-                Currency: {{Character.Currency}}&nbsp;&nbsp;&nbsp;
-                <button (click)="Character.Currency = Character.Currency - 10; UpdateStorage();">-</button>
-                <button (click)="Character.Currency = Character.Currency + 20; UpdateStorage();">+</button>
-            </p>
-        </div>
-        
-        <button class="accordion" (click)="OnSectionClick($event)">Inventory</button>
-        <div class="panel">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Value</th>
-                        <th>IsRawMaterial</th>
-                        <th>Count</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let inventoryItem of Character.Inventory.Items">
-                        <td>{{inventoryItem.Item.Name}}</td>
-                        <td>{{ItemType[inventoryItem.Item.Type]}}</td>
-                        <td>{{inventoryItem.Item.Description}}</td>
-                        <td>{{inventoryItem.Item.Value}}</td>
-                        <td>{{inventoryItem.Item.IsRawMaterial}}</td>
-                        <td>
-                            {{inventoryItem.Count}}
-                            <button (click)="RemoveItemFromInventory(inventoryItem.Item.Name)">-</button>
-                            <button (click)="AddItemToInventory(inventoryItem.Item.Name)">+</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <button class="accordion" (click)="OnSectionClick($event)">Gather</button>
-        <div class="panel">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Lvl Req</th>
-                        <th>Gather Rate</th>
-                        <th>Experience</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of GatherHandler.GatherableItems">
-                        <td>
-                            <button (click)="GatherItem(item)">Gather</button>&nbsp;
-                            {{item.Name}}
-                        </td>
-                        <td>{{ItemType[item.Type]}}</td>
-                        <td>{{item.LevelRequirement}}</td>
-                        <td>{{item.Rate}} seconds</td>
-                        <td>Grants {{item.Experience}}xp</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <button class="accordion" (click)="OnSectionClick($event)">Craft</button>
-        <div class="panel">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Lvl Req</th>
-                        <th>Recipe</th>
-                        <th>Experience</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of CraftHandler.CraftableItems">
-                        <td>
-                            <button (click)="CraftItem(item)">Craft</button>&nbsp;
-                            {{item.Name}}
-                        </td>
-                        <td>{{ItemType[item.Type]}}</td>
-                        <td>{{item.LevelRequirement}}</td>
-                        <td>
-                            <p *ngFor="let recipeItem of item.Recipe">
-                                {{recipeItem.Item.Name}} x {{recipeItem.Count}}
-                            </p>
-                        </td>
-                        <td>Grants {{item.Experience}}xp</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- <button class="accordion" (click)="OnSectionClick($event)">Armory</button>
-        <div class="panel">
-            <table>
-                <tbody>
-                    <tr *ngFor="let armoryItem of Character.Armory.Items">
-                        <td>
-                            <button (click)="RemoveItemFromArmory(armoryItem.Weapon.Name)">-</button>
-                            <button (click)="AddItemToArmory(armoryItem.Weapon.Name)">+</button>
-                        </td>
-                        <td>
-                            Name: {{armoryItem.Weapon.Name}}<br/>
-                            Type: {{ItemType[armoryItem.Weapon.Type]}}<br/>
-                            Lvl Req: {{armoryItem.Weapon.LevelRequirement}}<br/>
-                        </td>
-                        <td>
-                            Damage: {{armoryItem.Weapon.DamageAmount}}<br/>
-                            Damage Type: {{DamageType[armoryItem.Weapon.DamageType]}}<br/>
-                        </td>
-                        <td>
-                            Worth: {{armoryItem.Weapon.Value}}<br/>
-                            Details: {{armoryItem.Weapon.Description}}<br/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
-
-        <button class="accordion" (click)="OnSectionClick($event)">Global Chat</button>
-        <div class="panel">
-            <p><textarea rows="5" cols="50" #chatTextArea readonly></textarea></p>
-            <p>Message: <input type="text" #messageTextField (keyup.enter)="onChatMessageEnter()" /></p>
-
-            <h3>Current Online Players</h3>
-            <div *ngFor="let player of CurrentOnlinePlayers">
-                <p>{{player.Name}}</p>
+<div class="container">
+    <div #logIn *ngIf="!Character">
+        <input #logInTextField type="text" (keyup.enter)="onNameEnter(logInTextField.value)" />
+    </div>
+    <div #characterData *ngIf="Character">
+        <div class="left-container">
+            <button class="accordion" (click)="OnSectionClick($event)">Character Data</button>
+            <div class="panel">
+                <table style="border: 0;">
+                    <td style="border: 0; vertical-align: top;">
+                        <p>Name: {{Character.Name}} <button (click)="ResetCharacter();">Reset Character</button></p>
+                        <p>Level: {{Character.Level}} \ 
+                            Experience: {{Character.Experience}}&nbsp;&nbsp;&nbsp;
+                            <button (click)="OnDecreaseXPClick()">-</button>
+                            <button (click)="OnAddXPClick()">+</button>
+                        </p>
+                        <p>
+                            Currency: {{Character.Currency}}&nbsp;&nbsp;&nbsp;
+                            <button (click)="Character.Currency = Character.Currency - 10; UpdateStorage();">-</button>
+                            <button (click)="Character.Currency = Character.Currency + 20; UpdateStorage();">+</button>
+                        </p>
+                    </td>
+                    <td style="border: 0;">
+                        <p>Activity Log</p>
+                        <textarea style="width: 90%; height: 100px;" #activityLog></textarea>
+                    </td>
+                </table>
+            </div>
+            
+            <button class="accordion" (click)="OnSectionClick($event)">Inventory</button>
+            <div class="panel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Value</th>
+                            <th>IsRawMaterial</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let inventoryItem of Character.Inventory.Items">
+                            <td>{{inventoryItem.Item.Name}}</td>
+                            <td>{{ItemType[inventoryItem.Item.Type]}}</td>
+                            <td>{{inventoryItem.Item.Description}}</td>
+                            <td>{{inventoryItem.Item.Value}}</td>
+                            <td>{{inventoryItem.Item.IsRawMaterial}}</td>
+                            <td>
+                                {{inventoryItem.Count}}
+                                <button (click)="RemoveItemFromInventory(inventoryItem.Item.Name)">-</button>
+                                <button (click)="AddItemToInventory(inventoryItem.Item.Name)">+</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <button class="accordion" (click)="OnSectionClick($event)">Global Chat</button>
+            <div class="panel">
+                <table style="border: 0;">
+                    <td style="border: 0; vertical-align: top;">
+                        <p><textarea style="width:90%; height: 100px;" #chatTextArea readonly></textarea></p>
+                        <p>Message: <input style="width:90%;" type="text" #messageTextField (keyup.enter)="onChatMessageEnter()" /></p>
+                    </td>
+                    <td style="border: 0;">
+                        <h3>Current Online Players</h3>
+                        <div *ngFor="let player of CurrentOnlinePlayers">
+                            <p>{{player.Name}}</p>
+                        </div>
+                    </td>
+                </table>
+            </div>
+    
+            <button class="accordion" (click)="OnSectionClick($event)">Character Log/Save Data</button>
+            <div class="panel">
+                <textarea style="width: 90%; height: 100px;">{{SaveString}}</textarea>
             </div>
         </div>
-
-        <button class="accordion" (click)="OnSectionClick($event)">Character Log/Save Data</button>
-        <div class="panel">
-            <textarea rows="5" cols="50" #activityLog></textarea>
-            <textarea rows="5" cols="50">{{Character.saveString}}</textarea>
+    
+        <div class="right-container">
+            <button class="accordion" (click)="OnSectionClick($event)">Gather</button>
+            <div class="panel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Lvl Req</th>
+                            <th>Gather Rate</th>
+                            <th>Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of GatherHandler.GatherableItems">
+                            <ng-container *ngIf="Character.Level >= item.LevelRequirement">
+                                <td>
+                                    <button *ngIf="IsBusy" (click)="CancelGather(); IsBusy = false">Cancel</button><button *ngIf="!IsBusy" (click)="GatherItem(item); IsBusy = true">Gather</button>&nbsp;
+                                    {{item.Name}}
+                                </td>
+                                <td>{{ItemType[item.Type]}}</td>
+                                <td>{{item.LevelRequirement}}</td>
+                                <td>{{item.Rate}} seconds</td>
+                                <td>Grants {{item.Experience}}xp</td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    
+            <button class="accordion" (click)="OnSectionClick($event)">Craft</button>
+            <div class="panel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Lvl Req</th>
+                            <th>Recipe</th>
+                            <th>Experience</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of CraftHandler.CraftableItems">
+                            <ng-container *ngIf="Character.Level >= item.LevelRequirement">
+                                <td>
+                                    <button (click)="CraftItem(item)">Craft</button>&nbsp;
+                                    {{item.Name}}
+                                </td>
+                                <td>{{ItemType[item.Type]}}</td>
+                                <td>{{item.LevelRequirement}}</td>
+                                <td>
+                                    <p *ngFor="let recipeItem of item.Recipe">
+                                        {{recipeItem.Item.Name}} x {{recipeItem.Count}}
+                                    </p>
+                                </td>
+                                <td>Grants {{item.Experience}}xp</td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

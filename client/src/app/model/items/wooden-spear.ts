@@ -18,5 +18,5 @@ export class WoodenSpear implements Item, Craftable, Weapon
     public DamageType: DamageType = DamageType.Physical;
     public WeaponType: WeaponType = WeaponType.Melee;
     public Recipe: RecipeItem[] = [new RecipeItem(new Stone(), 1), new RecipeItem(new Stick(), 2)];
-    public CraftTime: number = 3;
+    public CraftTime: number = 30;
 }

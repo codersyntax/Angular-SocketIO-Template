@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Character } from '../model/character';
 import { CraftHandler } from '../model/crafting/craft-handler';
@@ -21,6 +21,9 @@ export class HomeComponent {
   @ViewChild('chatTextArea', {static: false}) public ChatTextArea!: ElementRef;
 
   Character : any;
+  SaveString!: string;
+  IsBusy : boolean = false;
+  GlobalInterval: any;
   CurrentOnlinePlayers : Character[] | undefined;
   LevelHandler: LevelHandler;
   GatherHandler: GatherHandler;
@@ -29,6 +32,7 @@ export class HomeComponent {
   ItemType = ItemType;
   DamageType = DamageType;
   WeaponType = WeaponType;
+  TimerAmount: number = 100;
 
   constructor(private socket: Socket) {
     this.LevelHandler = new LevelHandler();
@@ -45,6 +49,7 @@ export class HomeComponent {
    }
 
   public ngAfterViewInit() {
+    this.SaveString = JSON.stringify(this.Character);
     this.socket.on('updateCharacterConnectionString', (socketId: any) => {
       this.Character!.SocketId = socketId;
     });
@@ -59,14 +64,15 @@ export class HomeComponent {
   }
 
   public OnSectionClick(event: any) {
-    var previousActiveElement = event.target.parentElement.querySelector(".active");
-    if(previousActiveElement)
+    console.log(event.target.nextSibling.style.display);
+    if(event.target.nextSibling.style.display == "block")
     {
-      previousActiveElement.classList.remove("active");
-      previousActiveElement.nextSibling.style.display = "none";
+      event.target.nextSibling.style.display == "none";
     }
-    event.target.className += " active";
-    event.target.nextSibling.style.display = "block";
+    else if(event.target.nextSibling.style.display == "none")
+    {
+      event.target.nextSibling.style.display = "block";
+    }
   }
 
   public onChatMessageEnter() {
@@ -81,7 +87,8 @@ export class HomeComponent {
   }
 
   UpdateStorage() {
-    localStorage.setItem('character', JSON.stringify(this.Character));
+    this.SaveString = JSON.stringify(this.Character);
+    localStorage.setItem('character', this.SaveString);
   }
 
   ResetCharacter() {
@@ -102,8 +109,27 @@ export class HomeComponent {
   }
 
   GatherItem(item: Gatherable) {
-    this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
-    this.UpdateStorage();
+    if(this.IsBusy)
+    {
+      if(this.GlobalInterval != undefined) {
+        clearInterval(this.GlobalInterval);
+        this.GlobalInterval = undefined;
+      }
+    }
+    else {
+      this.GlobalInterval = setInterval(() => {
+        this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
+        this.UpdateStorage();
+        console.log("Gathered item");
+        console.log(this.Character);
+      }, item.Rate * 1000)
+    }
+  }
+
+  CancelGather() {
+    clearInterval(this.GlobalInterval);
+    console.log("Clearing current timer");
+    this.GlobalInterval = undefined;
   }
 
   CraftItem(item: Craftable) {
@@ -112,9 +138,7 @@ export class HomeComponent {
   }
 
   AddItemToInventory(itemName: string) {
-    console.log(itemName);
     this.Character.Inventory.Items = this.InventoryHandler.AddItem(this.Character.Inventory.Items, itemName, this.ActivityLog);
-    console.log(this.Character);
     this.UpdateStorage();
   }
 

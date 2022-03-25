@@ -17,5 +17,5 @@ export class WoodenPickaxe implements Item, Tool, Craftable {
     public Recipe: RecipeItem[] = [
         new RecipeItem(new Stick(), 3)
     ];
-    public CraftTime: number = 3;
+    public CraftTime: number = 30;
 }

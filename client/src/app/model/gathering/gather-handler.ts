@@ -24,7 +24,7 @@ export class GatherHandler {
         {
             if(item.LevelRequirement <= player.Level) {
                 this.inventoryHandler.AddItemByObject(playerInventory.Items, item, activityLog);
-                activityLog.nativeElement.value = item.Name + " gathered and added to inventory\n" + activityLog.nativeElement.value;
+                activityLog.nativeElement.value = item.Name + " gathered\n" + activityLog.nativeElement.value;
                 player.Experience += item.Experience;
                 player.Level = this.levelHandler.CalculateLevel(player.Experience);
                 return playerInventory;
@@ -34,18 +34,5 @@ export class GatherHandler {
             }
         }
         return playerInventory;
-    }
-
-    private AddGatheredItem(inventory: Inventory, item: Gatherable) {
-        var existingItemIndex = inventory.Items.findIndex(i => i.Item.Name == item.Name);
-        if(existingItemIndex < 0)
-        {
-            var newItem = new InventoryItem(item)
-            newItem.Count++;
-            inventory.Items.push(newItem);
-        }
-        else {
-            inventory.Items[existingItemIndex].Count++;
-        }
     }
 }
