@@ -99,7 +99,7 @@
                                 </td>
                                 <td>{{ItemType[item.Type]}}</td>
                                 <td>{{item.LevelRequirement}}</td>
-                                <td>{{item.Rate}} seconds</td>
+                                <td>{{this.CharacterHandler.GatherHandler.DetermineGatherRate(this.CharacterHandler.Character.Inventory, item) / 1000}} seconds</td>
                                 <td>Grants {{item.Experience}}xp</td>
                             </ng-container>
                         </tr>

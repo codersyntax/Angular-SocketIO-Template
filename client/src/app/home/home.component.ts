@@ -1,14 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { Character } from '../model/character/character';
-import { CraftHandler } from '../model/crafting/craft-handler';
-import { GatherHandler } from '../model/gathering/gather-handler';
-import { InventoryHandler } from '../model/inventory/inventory-handler';
 import { Craftable } from '../model/items/craftable-items/craftable';
 import { Gatherable } from '../model/items/gatherable-items/gatherable';
 import { ItemType } from '../model/items/item';
 import { DamageType, WeaponType } from '../model/items/craftable-items/weapon';
-import { LevelHandler } from '../model/character/level-handler';
 import { CharacterHandler } from '../model/character/character-handler';
 
 @Component({
@@ -119,10 +115,11 @@ export class HomeComponent {
       {
         if(item.LevelRequirement <= this.CharacterHandler.Character.Level) {
           this.IsBusy = true;
+          var gatherRate = this.CharacterHandler.GatherHandler.DetermineGatherRate(this.CharacterHandler.Character.Inventory, item);
           this.GlobalInterval = setInterval(() => {
             this.CharacterHandler.GatherHandler.GatherItems(item, this.CharacterHandler.Character, this.CharacterHandler.Character.Inventory, this.ActivityLog);
             this.UpdateStorage();
-          }, item.Rate * 1000)
+          }, gatherRate)
         }
         else {
           this.ActivityLog.nativeElement.value = "You are not the required level to gather " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
@@ -173,12 +170,12 @@ export class HomeComponent {
   }
 
   AddItemToInventory(itemName: string) {
-    this.CharacterHandler.InventoryHandler.AddItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
+    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.AddItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
     this.UpdateStorage();
   }
 
   RemoveItemFromInventory(itemName: string) {
-    this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
+    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
     this.UpdateStorage();
   }
 }

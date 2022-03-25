@@ -1,14 +1,14 @@
 import { ElementRef } from "@angular/core";
-import { Character } from "../character/character";
-import { Inventory } from "../inventory/inventory";
-import { InventoryHandler } from "../inventory/inventory-handler";
-import { ItemType } from "../items/item";
-import { Craftable } from "../items/craftable-items/craftable";
-import { RecipeItem } from "../items/craftable-items/recipe-item";
-import { WoodenPickaxe } from "../items/craftable-items/wooden-pickaxe";
-import { WoodenSpear } from "../items/craftable-items/wooden-spear";
-import { LevelHandler } from "../character/level-handler";
-import { StonePickaxe } from "../items/craftable-items/stone-pickaxe";
+import { Character } from "../../character/character";
+import { Inventory } from "../../inventory/inventory";
+import { InventoryHandler } from "../../inventory/inventory-handler";
+import { ItemType } from "../item";
+import { Craftable } from "./craftable";
+import { RecipeItem } from "./recipe-item";
+import { WoodenPickaxe } from "./wooden-pickaxe";
+import { WoodenSpear } from "./wooden-spear";
+import { LevelHandler } from "../../character/level-handler";
+import { StonePickaxe } from "./stone-pickaxe";
 
 export class CraftHandler {
     private levelHandler = new LevelHandler();
@@ -66,7 +66,14 @@ export class CraftHandler {
         for(var i = 0; i < recipe.length; i++)
         {
             var requiredMaterialIndex = inventory.Items.findIndex(item => item.Item.Name == recipe[i].Item.Name);
-            inventory.Items[requiredMaterialIndex].Count -= recipe[i].Count;
+            if(inventory.Items[requiredMaterialIndex].Count == recipe[i].Count)
+            {
+                inventory.Items = inventory.Items.filter(t => t.Item.Name != recipe[i].Item.Name);
+            }
+            else 
+            {
+                inventory.Items[requiredMaterialIndex].Count -= recipe[i].Count;
+            }
         }
     }
 }

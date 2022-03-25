@@ -1,4 +1,4 @@
-import { Craftable } from "./craftable";
+import { Craftable, UseType } from "./craftable";
 import { Item, ItemType } from "../item";
 import { RecipeItem } from "./recipe-item";
 import { Stick } from "../gatherable-items/stick";
@@ -9,6 +9,7 @@ export class WoodenSpear implements Item, Craftable, Weapon
     public Name: string = "Wooden Spear";
     public Experience: number = 48;
     public Type: ItemType = ItemType.Weapon;
+    public UseType: UseType = UseType.Combat;
     public Description: string = "Its a wooden spear...";
     public Value: number = 3;
     public LevelRequirement: number = 3;

@@ -1,7 +1,7 @@
 export abstract class Tool {
     public Name!: string;
     public LevelRequirement!: number;
-    public DamageAmount!: number;
+    public Multiplyer!: number;
     public ToolType!: ToolType;
   }
   
