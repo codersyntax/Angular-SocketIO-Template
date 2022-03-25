@@ -3,8 +3,11 @@ import { Socket } from 'ngx-socket-io';
 import { Character } from '../model/character/character';
 import { Craftable } from '../model/items/craftable-items/craftable';
 import { Gatherable } from '../model/items/gatherable-items/gatherable';
-import { ItemType } from '../model/items/item';
+import { Item, ItemType } from '../model/items/item';
 import { CharacterHandler } from '../model/character/character-handler';
+import { Market } from '../model/market/market';
+import { InventoryItem } from '../model/inventory/inventory-item';
+import { MarketItem } from '../model/market/market-item';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +20,7 @@ export class HomeComponent {
   @ViewChild('chatTextArea', {static: false}) public ChatTextArea!: ElementRef;
 
   CharacterHandler : CharacterHandler;
+  Market: Market;
   SaveString!: string;
   IsBusy : boolean = false;
   GlobalInterval: any;
@@ -34,11 +38,14 @@ export class HomeComponent {
     else {
     }
     this.CharacterHandler = new CharacterHandler();
+    this.Market = new Market();
     this.CharacterHandler.Character = character;
    }
 
   public ngAfterViewInit() {
     this.SaveString = JSON.stringify(this.CharacterHandler.Character);
+    this.socket.emit("GetMarketData");
+
     this.socket.on('updateCharacterConnectionString', (socketId: any) => {
       this.CharacterHandler.Character.SocketId = socketId;
     });
@@ -49,7 +56,11 @@ export class HomeComponent {
 
     this.socket.on('postChatMessage', (message: any) => {
       this.ChatTextArea.nativeElement.value = message + this.ChatTextArea.nativeElement.value;
-    })
+    });
+
+    this.socket.on('UpdateMarket', (market: any) => {
+      this.Market.Listings = JSON.parse(market);
+    });
   }
 
   public OnSectionClick(event: any) {
@@ -94,6 +105,14 @@ export class HomeComponent {
   OnDecreaseXPClick() {
     this.CharacterHandler.Character.Experience -= 50;
     this.CharacterHandler.Character.Level = this.CharacterHandler.LevelHandler.CalculateLevel(this.CharacterHandler.Character.Experience);
+    this.UpdateStorage();
+  }
+
+  AddItemToMarket(item: InventoryItem) {
+    this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, item.Item.Name, this.ActivityLog);
+    var marketItem = new MarketItem(this.CharacterHandler.Character, item.Item, 1, 1);
+    this.socket.emit("AddMarketItem", JSON.stringify(marketItem));
+    //this.Market.Listings.push(new MarketItem(this.CharacterHandler.Character, item.Item, 1))
     this.UpdateStorage();
   }
 

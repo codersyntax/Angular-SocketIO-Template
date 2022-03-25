@@ -26,13 +26,24 @@ io.on("connection", socket => {
 
     socket.on("chatMessage", (message) => {
         console.log('\x1b[36m%s\x1b[0m', " " + message);
-        io.emit("postChatMessage", message);
+        io.emit("postChatMessage", " " + message);
     })
+
+    socket.on("GetMarketData", () => {
+        io.emit("UpdateMarket", JSON.stringify(market));
+    })
+
+    socket.on("AddMarketItem", (marketItem) => {
+        var marketItemObj = JSON.parse(marketItem);
+        console.log('\x1b[35m%s\x1b[0m', " " + new Date().toLocaleTimeString() + " : " + marketItemObj.ListingOwner.Name + " added (" + marketItemObj.Count + ") " + marketItemObj.Item.Name + " for " + marketItemObj.Price + " on the market ");
+        market.push(marketItemObj);
+        io.emit("UpdateMarket", JSON.stringify(market));
+    });
 
     socket.on("disconnect", () => {
         var loggedOutCharacter = characters.filter(i => i.SocketId == socket.id);
         if(loggedOutCharacter.length == 1) {
-            console.log(loggedOutCharacter[0].Name + " logging out...");
+            console.log('\x1b[37m%s\x1b[0m', " " + new Date().toLocaleTimeString() + " : " + loggedOutCharacter[0].Name + " logging out...");
         }
         characters = characters.filter(i => i.SocketId != socket.id);
         io.emit("currentOnlineCharacters", characters);
@@ -46,3 +57,5 @@ http.listen(5000, () => {
 
 //TODO Persist character data somewhere
 var characters = [];
+//TODO Persist market data somewhere
+var market = [];

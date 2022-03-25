@@ -41,7 +41,10 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let inventoryItem of CharacterHandler.Character.Inventory.Items">
-                            <td title="{{inventoryItem.Item.Description}}">{{inventoryItem.Item.Name}}</td>
+                            <td title="{{inventoryItem.Item.Description}}">
+                                {{inventoryItem.Item.Name}}&nbsp;
+                                <button (click)="AddItemToMarket(inventoryItem)">Sell</button>
+                            </td>
                             <td>{{ItemType[inventoryItem.Item.Type]}}</td>
                             <td>{{inventoryItem.Item.Description}}</td>
                             <td>{{inventoryItem.Item.Value}}</td>
@@ -137,6 +140,28 @@
                                 <td>{{item.CraftTime}} seconds</td>
                                 <td>Grants {{item.Experience}}xp</td>
                             </ng-container>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <button class="accordion" (click)="OnSectionClick($event)">Market</button>
+            <div class="panel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Count</th>
+                            <th>Price</th>
+                            <th>Listing Owner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let listing of Market.Listings">
+                            <td>{{listing.Item.Name}}</td>
+                            <td>{{listing.Price}}</td>
+                            <td>{{listing.Count}}</td>
+                            <td>{{listing.ListingOwner.Name}}</td>
                         </tr>
                     </tbody>
                 </table>
