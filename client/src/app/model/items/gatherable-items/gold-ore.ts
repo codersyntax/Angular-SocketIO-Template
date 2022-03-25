@@ -9,7 +9,6 @@ export class GoldOre implements Item, Gatherable
     public Type: ItemType = ItemType.Material;
     public Description: string = "Its gold...";
     public Value: number = 10;
-    public IsRawMaterial: boolean = true;
     public LevelRequirement: number = 10;
     public RequiredTool: Tool | undefined = undefined;
     public Rate: number = 16;

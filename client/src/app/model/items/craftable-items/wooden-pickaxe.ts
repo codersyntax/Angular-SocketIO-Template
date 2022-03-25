@@ -10,7 +10,6 @@ export class WoodenPickaxe implements Item, Tool, Craftable {
     public Type: ItemType = ItemType.Tool;
     public Description: string = "Useful starter tool for mining";
     public Value: number = 3;
-    public IsRawMaterial: boolean = false;
     public LevelRequirement: number = 2;
     public DamageAmount: number = 3;
     public ToolType: ToolType = ToolType.Mining;

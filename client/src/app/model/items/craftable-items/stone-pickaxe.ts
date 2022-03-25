@@ -11,7 +11,6 @@ export class StonePickaxe implements Item, Tool, Craftable {
     public Type: ItemType = ItemType.Tool;
     public Description: string = "Stone pickaxe tool suited for mining";
     public Value: number = 6;
-    public IsRawMaterial: boolean = false;
     public LevelRequirement: number = 5;
     public DamageAmount: number = 4.5;
     public ToolType: ToolType = ToolType.Mining;

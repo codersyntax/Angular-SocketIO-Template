@@ -4,7 +4,6 @@ export abstract class Item {
     public Type!: ItemType;
     public Description!: string;
     public Value!: number;
-    public IsRawMaterial!: boolean;
     public LevelRequirement!: number;
 }
 

@@ -10,7 +10,6 @@ export class CopperOre implements Item, Gatherable
     public Type: ItemType = ItemType.Material;
     public Description: string = "A natural metallic sediment that can be mined, smelted, or sold for profit";
     public Value: number = 3;
-    public IsRawMaterial: boolean = true;
     public LevelRequirement: number = 6;
     public RequiredTool: Tool | undefined = new StonePickaxe();
     public Rate: number = 9;

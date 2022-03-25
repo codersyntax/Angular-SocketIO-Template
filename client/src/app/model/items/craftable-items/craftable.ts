@@ -8,7 +8,6 @@ export abstract class Craftable {
     public LevelRequirement!: number;
     public Description!: string;
     public Value!: number;
-    public IsRawMaterial!: boolean;
     public Recipe!: RecipeItem[];
     public CraftTime!: number;
   }

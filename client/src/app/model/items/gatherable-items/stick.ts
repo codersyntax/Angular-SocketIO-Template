@@ -9,7 +9,6 @@ export class Stick implements Item, Gatherable
     public Type: ItemType = ItemType.Material;
     public Description: string = "Its a stick...";
     public Value: number = 1;
-    public IsRawMaterial: boolean = true;
     public RequiredTool: Tool | undefined = undefined;
     public LevelRequirement: number = 1;
     public Rate: number = 4;

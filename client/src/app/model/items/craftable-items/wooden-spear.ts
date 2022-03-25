@@ -11,7 +11,6 @@ export class WoodenSpear implements Item, Craftable, Weapon
     public Type: ItemType = ItemType.Weapon;
     public Description: string = "Its a wooden spear...";
     public Value: number = 3;
-    public IsRawMaterial: boolean = false;
     public LevelRequirement: number = 3;
     public DamageAmount: number = 4;
     public DamageType: DamageType = DamageType.Physical;

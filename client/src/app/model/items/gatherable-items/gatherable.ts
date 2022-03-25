@@ -9,6 +9,5 @@ export abstract class Gatherable {
   public LevelRequirement!: number;
   public Description!: string;
   public Value!: number;
-  public IsRawMaterial!: boolean;
   public Rate!: number;
   }

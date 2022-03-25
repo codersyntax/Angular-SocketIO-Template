@@ -36,7 +36,6 @@
                             <th>Type</th>
                             <th>Description</th>
                             <th>Value</th>
-                            <th>IsRawMaterial</th>
                             <th>Count</th>
                         </tr>
                     </thead>
@@ -46,7 +45,6 @@
                             <td>{{ItemType[inventoryItem.Item.Type]}}</td>
                             <td>{{inventoryItem.Item.Description}}</td>
                             <td>{{inventoryItem.Item.Value}}</td>
-                            <td>{{inventoryItem.Item.IsRawMaterial}}</td>
                             <td>
                                 {{inventoryItem.Count}}
                                 <button (click)="RemoveItemFromInventory(inventoryItem.Item.Name)">-</button>
