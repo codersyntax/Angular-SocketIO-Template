@@ -11,6 +11,6 @@ export class Stick implements Item, Gatherable
     public Value: number = 1;
     public IsRawMaterial: boolean = true;
     public RequiredTool: Tool | undefined = undefined;
-    public LevelRequirement: number = 0;
+    public LevelRequirement: number = 1;
     public Rate: number = 4;
 }

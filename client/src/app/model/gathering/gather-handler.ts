@@ -1,5 +1,5 @@
 import { ElementRef } from "@angular/core";
-import { Character } from "../character";
+import { Character } from "../character/character";
 import { Inventory } from "../inventory/inventory";
 import { InventoryHandler } from "../inventory/inventory-handler";
 import { Gatherable } from "../items/gatherable-items/gatherable";
@@ -8,7 +8,7 @@ import { Stick } from "../items/gatherable-items/stick";
 import { Stone } from "../items/gatherable-items/stone";
 import { GoldOre } from "../items/gatherable-items/gold-ore";
 import { Tool } from "../items/craftable-items/tool";
-import { LevelHandler } from "../leveling/level-handler";
+import { LevelHandler } from "../character/level-handler";
 import { CopperOre } from "../items/gatherable-items/copper-ore";
 
 export class GatherHandler {

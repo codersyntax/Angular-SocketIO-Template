@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Character } from '../model/character';
+import { Character } from '../model/character/character';
 import { CraftHandler } from '../model/crafting/craft-handler';
 import { GatherHandler } from '../model/gathering/gather-handler';
 import { InventoryHandler } from '../model/inventory/inventory-handler';
@@ -8,7 +8,8 @@ import { Craftable } from '../model/items/craftable-items/craftable';
 import { Gatherable } from '../model/items/gatherable-items/gatherable';
 import { ItemType } from '../model/items/item';
 import { DamageType, WeaponType } from '../model/items/craftable-items/weapon';
-import { LevelHandler } from '../model/leveling/level-handler';
+import { LevelHandler } from '../model/character/level-handler';
+import { CharacterHandler } from '../model/character/character-handler';
 
 @Component({
   selector: 'app-home',
@@ -20,38 +21,34 @@ export class HomeComponent {
   @ViewChild('messageTextField', {static: false}) public MessageTextField!: ElementRef;
   @ViewChild('chatTextArea', {static: false}) public ChatTextArea!: ElementRef;
 
-  Character : any;
+  CharacterHandler : CharacterHandler;
   SaveString!: string;
   IsBusy : boolean = false;
   GlobalInterval: any;
   CurrentOnlinePlayers : Character[] | undefined;
-  LevelHandler: LevelHandler;
-  GatherHandler: GatherHandler;
-  CraftHandler: CraftHandler;
-  InventoryHandler: InventoryHandler;
   ItemType = ItemType;
   DamageType = DamageType;
   WeaponType = WeaponType;
   TimerAmount: number = 100;
 
   constructor(private socket: Socket) {
-    this.LevelHandler = new LevelHandler();
-    this.GatherHandler = new GatherHandler();
-    this.CraftHandler = new CraftHandler();
-    this.InventoryHandler = new InventoryHandler();
     //TEMPORARY STORAGE
     var save = localStorage.getItem('character');
     if(save)
     {
-      this.Character = JSON.parse(save);
-      this.socket.emit("userSubmittedPlayerName", this.Character);
+      var character = JSON.parse(save);
+      this.socket.emit("userSubmittedPlayerName", character);
     }
+    else {
+    }
+    this.CharacterHandler = new CharacterHandler();
+    this.CharacterHandler.Character = character;
    }
 
   public ngAfterViewInit() {
-    this.SaveString = JSON.stringify(this.Character);
+    this.SaveString = JSON.stringify(this.CharacterHandler.Character);
     this.socket.on('updateCharacterConnectionString', (socketId: any) => {
-      this.Character!.SocketId = socketId;
+      this.CharacterHandler.Character.SocketId = socketId;
     });
 
     this.socket.on('currentOnlineCharacters', (currentOnlinePlayers: any) => {
@@ -76,35 +73,35 @@ export class HomeComponent {
   }
 
   public onChatMessageEnter() {
-    var chatMessage = new Date().toLocaleTimeString() + " " + this.Character?.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
+    var chatMessage = new Date().toLocaleTimeString() + " " + this.CharacterHandler.Character.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
     this.socket.emit("chatMessage", chatMessage);
     this.MessageTextField.nativeElement.value = "";
   }
 
   public onNameEnter(playerName: string) {
-    this.Character = new Character(playerName);
-    this.socket.emit("userSubmittedPlayerName", this.Character);
+    this.CharacterHandler.Character = new Character(playerName);
+    this.socket.emit("userSubmittedPlayerName", this.CharacterHandler.Character);
   }
 
   UpdateStorage() {
-    this.SaveString = JSON.stringify(this.Character);
+    this.SaveString = JSON.stringify(this.CharacterHandler.Character);
     localStorage.setItem('character', this.SaveString);
   }
 
   ResetCharacter() {
-    this.Character = undefined;
+    (this.CharacterHandler.Character as any) = undefined;
     localStorage.clear();
   }
 
   OnAddXPClick() {
-    this.Character.Experience = this.Character.Experience + 50;
-    this.Character.Level = this.LevelHandler.CalculateLevel(this.Character.Experience);
+    this.CharacterHandler.Character.Experience = this.CharacterHandler.Character.Experience + 50;
+    this.CharacterHandler.Character.Level = this.CharacterHandler.LevelHandler.CalculateLevel(this.CharacterHandler.Character.Experience);
     this.UpdateStorage();
   }
 
   OnDecreaseXPClick() {
-    this.Character.Experience -= 50;
-    this.Character.Level = this.LevelHandler.CalculateLevel(this.Character.Experience);
+    this.CharacterHandler.Character.Experience -= 50;
+    this.CharacterHandler.Character.Level = this.CharacterHandler.LevelHandler.CalculateLevel(this.CharacterHandler.Character.Experience);
     this.UpdateStorage();
   }
 
@@ -118,12 +115,12 @@ export class HomeComponent {
       }
     }
     else {
-      if(this.GatherHandler.HasRequiredTool(item.RequiredTool, this.Character.Inventory))
+      if(this.CharacterHandler.GatherHandler.HasRequiredTool(item.RequiredTool, this.CharacterHandler.Character.Inventory))
       {
-        if(item.LevelRequirement <= this.Character.Level) {
+        if(item.LevelRequirement <= this.CharacterHandler.Character.Level) {
           this.IsBusy = true;
           this.GlobalInterval = setInterval(() => {
-            this.GatherHandler.GatherItems(item, this.Character, this.Character.Inventory, this.ActivityLog);
+            this.CharacterHandler.GatherHandler.GatherItems(item, this.CharacterHandler.Character, this.CharacterHandler.Character.Inventory, this.ActivityLog);
             this.UpdateStorage();
           }, item.Rate * 1000)
         }
@@ -149,12 +146,12 @@ export class HomeComponent {
       }
     }
     else {
-      if(this.CraftHandler.HasRequiredMaterials(this.Character.Inventory, item.Recipe))
+      if(this.CharacterHandler.CraftHandler.HasRequiredMaterials(this.CharacterHandler.Character.Inventory, item.Recipe))
       {
-        if(item.LevelRequirement <= this.Character.Level) {
+        if(item.LevelRequirement <= this.CharacterHandler.Character.Level) {
           this.IsBusy = true;
           this.GlobalInterval = setInterval(() => {
-            this.CraftHandler.CraftItem(item, this.Character, this.Character.Inventory, this.ActivityLog);
+            this.CharacterHandler.CraftHandler.CraftItem(item, this.CharacterHandler.Character, this.CharacterHandler.Character.Inventory, this.ActivityLog);
             this.UpdateStorage();
           }, item.CraftTime * 1000)
         }
@@ -176,12 +173,12 @@ export class HomeComponent {
   }
 
   AddItemToInventory(itemName: string) {
-    this.Character.Inventory.Items = this.InventoryHandler.AddItem(this.Character.Inventory.Items, itemName, this.ActivityLog);
+    this.CharacterHandler.InventoryHandler.AddItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
     this.UpdateStorage();
   }
 
   RemoveItemFromInventory(itemName: string) {
-    this.Character.Inventory.Items = this.InventoryHandler.RemoveItem(this.Character.Inventory.Items, itemName, this.ActivityLog);
+    this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
     this.UpdateStorage();
   }
 }

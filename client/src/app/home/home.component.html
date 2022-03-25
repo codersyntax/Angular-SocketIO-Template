@@ -1,23 +1,23 @@
 <div class="container">
-    <div #logIn *ngIf="!Character">
+    <div #logIn *ngIf='!CharacterHandler.Character'>
         <input #logInTextField type="text" (keyup.enter)="onNameEnter(logInTextField.value)" />
     </div>
-    <div #characterData *ngIf="Character">
+    <div #characterData *ngIf="CharacterHandler.Character">
         <div class="left-container">
             <button class="accordion" (click)="OnSectionClick($event)">Character Data</button>
             <div class="panel">
                 <table style="border: 0;">
                     <td style="border: 0; vertical-align: top;">
-                        <p>Name: {{Character.Name}} <button (click)="ResetCharacter();">Reset Character</button></p>
-                        <p>Level: {{Character.Level}} \ 
-                            Experience: {{Character.Experience}}&nbsp;&nbsp;&nbsp;
+                        <p>Name: {{CharacterHandler.Character.Name}} <button (click)="ResetCharacter();">Reset Character</button></p>
+                        <p>Level: {{CharacterHandler.Character.Level}} \ 
+                            Experience: {{CharacterHandler.Character.Experience}}&nbsp;&nbsp;&nbsp;
                             <button (click)="OnDecreaseXPClick()">-</button>
                             <button (click)="OnAddXPClick()">+</button>
                         </p>
                         <p>
-                            Currency: {{Character.Currency}}&nbsp;&nbsp;&nbsp;
-                            <button (click)="Character.Currency = Character.Currency - 10; UpdateStorage();">-</button>
-                            <button (click)="Character.Currency = Character.Currency + 20; UpdateStorage();">+</button>
+                            Currency: {{CharacterHandler.Character.Currency}}&nbsp;&nbsp;&nbsp;
+                            <button (click)="CharacterHandler.Character.Currency = CharacterHandler.Character.Currency - 10; UpdateStorage();">-</button>
+                            <button (click)="CharacterHandler.Character.Currency = CharacterHandler.Character.Currency + 20; UpdateStorage();">+</button>
                         </p>
                     </td>
                     <td style="border: 0;">
@@ -41,7 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let inventoryItem of Character.Inventory.Items">
+                        <tr *ngFor="let inventoryItem of CharacterHandler.Character.Inventory.Items">
                             <td title="{{inventoryItem.Item.Description}}">{{inventoryItem.Item.Name}}</td>
                             <td>{{ItemType[inventoryItem.Item.Type]}}</td>
                             <td>{{inventoryItem.Item.Description}}</td>
@@ -93,8 +93,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of GatherHandler.GatherableItems">
-                            <ng-container *ngIf="Character.Level >= item.LevelRequirement">
+                        <tr *ngFor="let item of CharacterHandler.GatherHandler.GatherableItems">
+                            <ng-container *ngIf="CharacterHandler.Character.Level >= item.LevelRequirement">
                                 <td title="{{item.Description}}">
                                     <button *ngIf="IsBusy" (click)="CancelAction(); IsBusy = false;">Cancel</button><button *ngIf="!IsBusy" (click)="GatherItem(item)">Gather</button>&nbsp;
                                     {{item.Name}}
@@ -118,12 +118,13 @@
                             <th>Type</th>
                             <th>Lvl Req</th>
                             <th>Recipe</th>
+                            <th>Craft Rate</th>
                             <th>Experience</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of CraftHandler.CraftableItems">
-                            <ng-container *ngIf="Character.Level >= item.LevelRequirement">
+                        <tr *ngFor="let item of CharacterHandler.CraftHandler.CraftableItems">
+                            <ng-container *ngIf="CharacterHandler.Character.Level >= item.LevelRequirement">
                                 <td title="{{item.Description}}">
                                     <button *ngIf="IsBusy" (click)="CancelAction(); IsBusy = false;">Cancel</button><button *ngIf="!IsBusy" (click)="CraftItem(item)">Craft</button>&nbsp;
                                     {{item.Name}}
@@ -135,6 +136,7 @@
                                         {{recipeItem.Item.Name}} x {{recipeItem.Count}}
                                     </p>
                                 </td>
+                                <td>{{item.CraftTime}} seconds</td>
                                 <td>Grants {{item.Experience}}xp</td>
                             </ng-container>
                         </tr>

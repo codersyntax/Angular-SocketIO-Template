@@ -1,5 +1,5 @@
 import { ElementRef } from "@angular/core";
-import { Character } from "../character";
+import { Character } from "../character/character";
 import { Inventory } from "../inventory/inventory";
 import { InventoryHandler } from "../inventory/inventory-handler";
 import { ItemType } from "../items/item";
@@ -7,7 +7,7 @@ import { Craftable } from "../items/craftable-items/craftable";
 import { RecipeItem } from "../items/craftable-items/recipe-item";
 import { WoodenPickaxe } from "../items/craftable-items/wooden-pickaxe";
 import { WoodenSpear } from "../items/craftable-items/wooden-spear";
-import { LevelHandler } from "../leveling/level-handler";
+import { LevelHandler } from "../character/level-handler";
 import { StonePickaxe } from "../items/craftable-items/stone-pickaxe";
 
 export class CraftHandler {

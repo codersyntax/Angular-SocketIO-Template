@@ -11,7 +11,7 @@ export class Stone implements Item, Gatherable
     public Description: string = "Its a rock...";
     public Value: number = 1;
     public IsRawMaterial: boolean = true;
-    public LevelRequirement: number = 1;
+    public LevelRequirement: number = 3;
     public RequiredTool: Tool | undefined = new WoodenPickaxe();
     public Rate: number = 6;
 }
