@@ -9,6 +9,7 @@ import { InventoryComponent } from './inventory/inventory.component';
 import { MiningComponent } from './mining/mining.component';
 import { BotanyComponent } from './botany/botany.component';
 import { WeaponsmithingComponent } from './weaponsmithing/weaponsmithing.component';
+import { SmithingComponent } from './smithing/smithing.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'inventory', component: InventoryComponent },
   { path: 'mining', component: MiningComponent },
   { path: 'botany', component: BotanyComponent },
-  { path: 'weaponsmithing', component: WeaponsmithingComponent }
+  { path: 'smithing', component: SmithingComponent },
+  { path: 'weaponsmithing', component: WeaponsmithingComponent },
 ];
 
 @NgModule({

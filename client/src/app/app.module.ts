@@ -13,6 +13,7 @@ import { MiningComponent } from './mining/mining.component';
 import { BotanyComponent } from './botany/botany.component';
 import { WeaponsmithingComponent } from './weaponsmithing/weaponsmithing.component';
 import { InventoryItemComponent } from './inventory-item/inventory-item.component';
+import { SmithingComponent } from './smithing/smithing.component';
 
 const hostname = window.location.hostname;
 const url = (hostname === 'localhost') ? `${window.location.protocol}//${hostname}:5000` : "";
@@ -28,7 +29,8 @@ const config: SocketIoConfig = { url, options: {} };
     MiningComponent,
     BotanyComponent,
     WeaponsmithingComponent,
-    InventoryItemComponent
+    InventoryItemComponent,
+    SmithingComponent
   ],
   imports: [
     FormsModule,

@@ -1,0 +1,35 @@
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+            <th>Lvl Req</th>
+            <th>Recipe</th>
+            <th>Craft Rate</th>
+            <th>Current Amount</th>
+            <th>Experience</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of CharacterService.CraftHandler.CraftableItems">
+            <ng-container *ngIf="CharacterService.Character.Skills.SmithingLevel >= item.LevelRequirement && item.ExperienceType == ExperienceType.Smithing">
+                <td title="{{item.Description}}">
+                    <button *ngIf="CharacterService.IsBusy" (click)="CancelAction(); CharacterService.IsBusy = false;">Cancel</button><button *ngIf="!CharacterService.IsBusy" (click)="CraftItem(item)">Craft</button>&nbsp;
+                    {{item.Name}}
+                </td>
+                <td>{{item.Description}}</td>
+                <td>{{ItemType[item.Type]}}</td>
+                <td>{{item.LevelRequirement}}</td>
+                <td>
+                    <p *ngFor="let recipeItem of item.Recipe">
+                        {{recipeItem.Item.Name}} x {{recipeItem.Count}}
+                    </p>
+                </td>
+                <td>{{item.CraftTime}} seconds</td>
+                <td>{{this.GetItemCount(item)}}</td>
+                <td>Grants {{item.Experience}}xp</td>
+            </ng-container>
+        </tr>
+    </tbody>
+</table>
