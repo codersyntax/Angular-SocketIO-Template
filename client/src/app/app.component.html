@@ -7,7 +7,7 @@
         <div class="sidebar">
             <img class="logo" />
             <ul>
-                <li (click)="OnSelect($event)" routerLink="">Home</li>
+                <li class="active" (click)="OnSelect($event)" routerLink="">Home</li>
                 <li (click)="OnSelect($event)"  routerLink="/inventory">Inventory</li>
                 <li (click)="OnSelect($event)"  routerLink="/market">Market Board</li>
                 <li (click)="OnSelect($event)"  routerLink="/mining"><span>Mining</span><span class="level">Level {{CharacterService.Character.Skills.MiningLevel}}</span></li>
@@ -25,12 +25,16 @@
               </div>
         </div>
         <div class="topbar">
-            <button (click)="ResetCharacter();">Reset Character</button>
-            <button (click)="UpdateStorage();">Save Character</button>
-            {{CharacterService.Character.Name}}&nbsp;&nbsp;&nbsp;
-            <button (click)="CharacterService.Character.Currency = CharacterService.Character.Currency - 10; UpdateStorage();">-</button>
-            Currency: {{CharacterService.Character.Currency}}
-            <button (click)="CharacterService.Character.Currency = CharacterService.Character.Currency + 20; UpdateStorage();">+</button>
+            <div>
+                <div>
+                    {{CharacterService.Character.Name}}&nbsp;&nbsp;&nbsp;<br/>
+                    <span style="font-size:smaller; color: rgb(211, 199, 38)">{{CharacterService.Character.Currency}} Gold</span>
+                </div>
+                <div>
+                    <button (click)="UpdateStorage();">Save Character</button>
+                    <button (click)="ResetCharacter();">Reset Character</button>
+                </div>
+            </div>
         </div>
         <div class="content-area">
             <router-outlet></router-outlet>
