@@ -7,12 +7,12 @@
         <div class="sidebar">
             <img class="logo" />
             <ul>
-                <li><a routerLink="">Home</a></li>
-                <li><a routerLink="/inventory">Inventory</a></li>
-                <li><a routerLink="/market">Market Board</a></li>
-                <li><span><a routerLink="/mining">Mining</a></span><span class="level">Level {{CharacterService.Character.Skills.MiningLevel}}</span></li>
-                <li><span><a routerLink="/botany">Botany</a></span><span class="level">Level {{CharacterService.Character.Skills.BotanyLevel}}</span></li>
-                <li><span><a routerLink="/weaponsmithing">Weaponsmithing</a></span><span class="level">Level {{CharacterService.Character.Skills.WeaponsmithingLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="">Home</li>
+                <li (click)="OnSelect($event)"  routerLink="/inventory">Inventory</li>
+                <li (click)="OnSelect($event)"  routerLink="/market">Market Board</li>
+                <li (click)="OnSelect($event)"  routerLink="/mining"><span>Mining</span><span class="level">Level {{CharacterService.Character.Skills.MiningLevel}}</span></li>
+                <li (click)="OnSelect($event)"  routerLink="/botany"><span>Botany</span><span class="level">Level {{CharacterService.Character.Skills.BotanyLevel}}</span></li>
+                <li (click)="OnSelect($event)"  routerLink="/weaponsmithing"><span>Weaponsmithing</span><span class="level">Level {{CharacterService.Character.Skills.WeaponsmithingLevel}}</span></li>
               </ul>
               <p>Activity Log</p>
               <textarea style="width: 90%; height: 100px;" [(ngModel)]="ToastService.Message" readonly></textarea>

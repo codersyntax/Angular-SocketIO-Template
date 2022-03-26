@@ -2,7 +2,7 @@ import { Character } from "../../character/character";
 import { Inventory } from "../../inventory/inventory";
 import { InventoryHandler } from "../../inventory/inventory-handler";
 import { ItemType } from "../item";
-import { Craftable } from "./craftable";
+import { Craftable, UseType } from "./craftable";
 import { RecipeItem } from "./recipe-item";
 import { WoodenPickaxe } from "./wooden-pickaxe";
 import { WoodenSpear } from "./wooden-spear";
@@ -35,8 +35,36 @@ export class CraftHandler {
                 {
                     this.RemoveRequiredMaterials(playerInventory, item.Recipe);
                     this.inventoryHandler.AddItem(playerInventory.Items, item);
-                    player.Experience += item.Experience;
-                    player.Level = this.levelHandler.CalculateLevel(player.Experience);
+                    switch(item.ExperienceType) {
+                        case UseType.Alchemy:
+                            player.Skills.AlchemyXP += item.Experience;
+                            player.Skills.AlchemyLevel = this.levelHandler.CalculateLevel(player.Skills.AlchemyXP);
+                            break;
+                        case UseType.Cooking:
+                            player.Skills.CookingXP += item.Experience;
+                            player.Skills.CookingLevel = this.levelHandler.CalculateLevel(player.Skills.CookingXP);
+                            break;
+                        case UseType.Smithing:
+                            player.Skills.SmithingXP += item.Experience;
+                            player.Skills.SmithingLevel = this.levelHandler.CalculateLevel(player.Skills.SmithingXP);
+                            break;
+                        case UseType.Weaponsmithing:
+                            player.Skills.WeaponsmithingXP += item.Experience;
+                            player.Skills.WeaponsmithingLevel = this.levelHandler.CalculateLevel(player.Skills.WeaponsmithingXP);
+                            break;
+                        case UseType.Armorer:
+                            player.Skills.ArmorerXP += item.Experience;
+                            player.Skills.ArmorerLevel = this.levelHandler.CalculateLevel(player.Skills.ArmorerXP);
+                            break;
+                        case UseType.Weaver:
+                            player.Skills.WeaverXP += item.Experience;
+                            player.Skills.WeaverLevel = this.levelHandler.CalculateLevel(player.Skills.WeaverXP);
+                            break;
+                        case UseType.Goldsmithing:
+                            player.Skills.GoldsmithingXP += item.Experience;
+                            player.Skills.GoldsmithingLevel = this.levelHandler.CalculateLevel(player.Skills.GoldsmithingXP);
+                            break;
+                    }
                     return playerInventory;
                 }
                 else

@@ -29,19 +29,19 @@ export class GatherHandler {
             switch(item.GatherType) {
                 case GatherType.Mining:
                     player.Skills.MiningXP += item.Experience;
-                    player.Skills.MiningLevel += this.levelHandler.CalculateLevel(player.Skills.MiningXP);
+                    player.Skills.MiningLevel = this.levelHandler.CalculateLevel(player.Skills.MiningXP);
                     break;
                 case GatherType.Botany:
                     player.Skills.BotanyXP += item.Experience;
-                    player.Skills.BotanyLevel += this.levelHandler.CalculateLevel(player.Skills.BotanyXP);
+                    player.Skills.BotanyLevel = this.levelHandler.CalculateLevel(player.Skills.BotanyXP);
                     break;
                 case GatherType.Farming:
                     player.Skills.FarmingXP += item.Experience;
-                    player.Skills.FarmingLevel += this.levelHandler.CalculateLevel(player.Skills.FarmingXP);
+                    player.Skills.FarmingLevel = this.levelHandler.CalculateLevel(player.Skills.FarmingXP);
                     break;
                 case GatherType.Fishing:
                     player.Skills.FishingXP += item.Experience;
-                    player.Skills.FishingLevel += this.levelHandler.CalculateLevel(player.Skills.FishingXP);
+                    player.Skills.FishingLevel = this.levelHandler.CalculateLevel(player.Skills.FishingXP);
                     break;
             }
             return playerInventory;

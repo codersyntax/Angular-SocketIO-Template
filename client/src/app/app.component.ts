@@ -39,6 +39,16 @@ export class AppComponent {
     });
   }
 
+  public OnSelect(e: any) {
+    var siblings = e.target.parentElement.children;
+    for(var i = 0; i < siblings.length; i++) {
+      if(siblings[i].className == "active") {
+        siblings[i].className = "";
+      }
+    }
+    e.target.className = "active";
+  }
+
   public onChatMessageEnter() {
     console.log(this.ToastService);
     var chatMessage = new Date().toLocaleTimeString() + " " + this.CharacterService.Character.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
@@ -54,20 +64,6 @@ export class AppComponent {
   ResetCharacter() {
     (this.CharacterService.Character as any) = undefined;
     localStorage.clear();
-  }
-
-  OnAddXPClick() {
-    this.CharacterService.Character.Experience = this.CharacterService.Character.Experience + 50;
-    this.CharacterService.Character.Level = this.CharacterService.LevelHandler.CalculateLevel(this.CharacterService.Character.Experience);
-    this.UpdateStorage();
-    this.ToastService.UpdateToast("Added xp");
-  }
-
-  OnDecreaseXPClick() {
-    this.CharacterService.Character.Experience -= 50;
-    this.CharacterService.Character.Level = this.CharacterService.LevelHandler.CalculateLevel(this.CharacterService.Character.Experience);
-    this.UpdateStorage();
-    this.ToastService.UpdateToast("Decreased xp");
   }
 
   UpdateStorage() {

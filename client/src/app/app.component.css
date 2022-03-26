@@ -32,11 +32,15 @@
   .sidebar > ul li {
     padding: 8px 0 8px 16px;
     display: block;
+    cursor: pointer;
   }
-  
-  .sidebar > ul li a {
-    color: #fff;
-    text-decoration: none;
+
+  .sidebar > ul li:hover {
+    background-color: #272727;
+  }
+
+  .sidebar > ul li.active {
+    background-color: #272727;
   }
 
   .sidebar > ul > li > .level {
