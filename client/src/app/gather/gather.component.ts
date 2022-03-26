@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastService } from '../toast.service';
 import { CharacterService } from '../character.service';
 import { WebSocketService } from '../web-socket.service';
-import { ItemType } from '../model/items/item';
+import { Item, ItemType } from '../model/items/item';
 import { Gatherable } from '../model/items/gatherable-items/gatherable';
 
 @Component({
@@ -50,6 +50,12 @@ export class GatherComponent implements OnInit {
       }
 
     }
+  }
+
+  GetItemCount(item: Item) {
+    var count = this.CharacterService.Character.Inventory.Items.find(i => i.Item.Name == item.Name)?.Count;
+    if(count) return count;
+    return 0;
   }
 
   CancelAction() {

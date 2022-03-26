@@ -6,6 +6,7 @@
             <th>Type</th>
             <th>Lvl Req</th>
             <th>Gather Rate</th>
+            <th>Current Amount</th>
             <th>Experience</th>
         </tr>
     </thead>
@@ -20,6 +21,7 @@
                 <td>{{ItemType[item.Type]}}</td>
                 <td>{{item.LevelRequirement}}</td>
                 <td>{{this.CharacterService.GatherHandler.DetermineGatherRate(this.CharacterService.Character.Inventory, item) / 1000}} seconds</td>
+                <td>{{this.GetItemCount(item)}}</td>
                 <td>Grants {{item.Experience}}xp</td>
             </ng-container>
         </tr>
