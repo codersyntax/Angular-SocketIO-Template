@@ -9,6 +9,10 @@ import { WoodenPickaxe } from "./wooden-pickaxe";
 import { WoodenSpear } from "./wooden-spear";
 import { LevelHandler } from "../../character/level-handler";
 import { StonePickaxe } from "./stone-pickaxe";
+import { CopperPickaxe } from "./copper-pickaxe";
+import { CopperIngot } from "./copper-ingot";
+import { IronIngot } from "./iron-ingot";
+import { IronPickaxe } from "./iron-pickaxe";
 
 export class CraftHandler {
     private levelHandler = new LevelHandler();
@@ -16,7 +20,11 @@ export class CraftHandler {
     public CraftableItems: Craftable[] = [
         new WoodenPickaxe(),
         new WoodenSpear(),
-        new StonePickaxe()
+        new StonePickaxe(),
+        new CopperIngot(),
+        new CopperPickaxe(),
+        new IronIngot(),
+        new IronPickaxe()
     ];
 
     public CraftItem(item: Craftable, player: Character, playerInventory: Inventory, activityLog: ElementRef) : Inventory {

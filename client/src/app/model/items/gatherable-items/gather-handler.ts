@@ -10,7 +10,7 @@ import { GoldOre } from "./gold-ore";
 import { Tool, ToolType } from "../craftable-items/tool";
 import { LevelHandler } from "../../character/level-handler";
 import { CopperOre } from "./copper-ore";
-import { UseType } from "../craftable-items/craftable";
+import { IronOre } from "./iron-ore";
 
 export class GatherHandler {
     private levelHandler = new LevelHandler();
@@ -19,6 +19,7 @@ export class GatherHandler {
         new Stick(),
         new Stone(),
         new CopperOre(),
+        new IronOre(),
         new GoldOre()
     ];
 
