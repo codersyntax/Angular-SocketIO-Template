@@ -35,16 +35,16 @@ export class WeaponsmithingComponent implements OnInit {
           this.CharacterService.GlobalInterval = setInterval(() => {
             this.CharacterService.CraftHandler.CraftItem(item, this.CharacterService.Character, this.CharacterService.Character.Inventory);
             this.UpdateStorage();
-            this.ToastService.UpdateToast("Received " + item.Experience + "xp for crafting " + item.Name);
+            this.ToastService.UpdateToast("Received " + item.Experience + " weaponsmithing xp for smithing " + item.Name);
           }, item.CraftTime * 1000)
         }
         else {
-          this.ToastService.UpdateToast("You are not the required level to craft " + item.Name);
+          this.ToastService.UpdateToast("You are not the required level to smith " + item.Name);
         }
       }
       else {
         this.CharacterService.IsBusy = false;
-        this.ToastService.UpdateToast("You do not possess the required materials to craft " + item.Name);
+        this.ToastService.UpdateToast("You do not possess the required materials to smith " + item.Name);
       }
 
     }

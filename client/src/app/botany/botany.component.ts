@@ -35,16 +35,16 @@ export class BotanyComponent {
           this.CharacterService.GlobalInterval = setInterval(() => {
             this.CharacterService.GatherHandler.GatherItems(item, this.CharacterService.Character, this.CharacterService.Character.Inventory);
             this.UpdateStorage();
-            this.ToastService.UpdateToast("Received " + item.Experience + "xp from gathering " + item.Name);
+            this.ToastService.UpdateToast("Received " + item.Experience + " botany xp from harvesting " + item.Name);
           }, gatherRate)
         }
         else {
-          this.ToastService.UpdateToast("You are not the required level to gather " + item.Name);
+          this.ToastService.UpdateToast("You are not the required level to harvest " + item.Name);
         }
       }
       else {
         this.CharacterService.IsBusy = false;
-        this.ToastService.UpdateToast("You do not possess the required tool to gather " + item.Name);
+        this.ToastService.UpdateToast("You do not possess the required tool to harvest " + item.Name);
       }
 
     }
