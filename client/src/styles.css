@@ -123,7 +123,6 @@ table {
     padding: 5px;
     border-collapse: collapse;
     width: 100%;
-    table-layout: fixed;
 }
 
 th {

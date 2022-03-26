@@ -10,16 +10,20 @@ import { Tool, ToolType } from "../craftable-items/tool";
 import { LevelHandler } from "../../character/level-handler";
 import { CopperOre } from "./copper-ore";
 import { IronOre } from "./iron-ore";
+import { Wheat } from "./wheat";
+import { Cotton } from "./cotton";
 
 export class GatherHandler {
     private levelHandler = new LevelHandler();
     private inventoryHandler = new InventoryHandler();
     public GatherableItems: Gatherable[] = [
-        new Stick(),
-        new Stone(),
-        new CopperOre(),
+        new GoldOre(),
         new IronOre(),
-        new GoldOre()
+        new Cotton(),
+        new CopperOre(),
+        new Stone(),
+        new Wheat(),
+        new Stick()
     ];
 
     public GatherItems(item: Gatherable, player: Character, playerInventory: Inventory) : Inventory {

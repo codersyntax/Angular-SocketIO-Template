@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>Name</th>
+            <th>Description</th>
             <th>Type</th>
             <th>Lvl Req</th>
             <th>Recipe</th>
@@ -17,6 +18,7 @@
                     <button *ngIf="CharacterService.IsBusy" (click)="CancelAction(); CharacterService.IsBusy = false;">Cancel</button><button *ngIf="!CharacterService.IsBusy" (click)="CraftItem(item)">Craft</button>&nbsp;
                     {{item.Name}}
                 </td>
+                <td>{{item.Description}}</td>
                 <td>{{ItemType[item.Type]}}</td>
                 <td>{{item.LevelRequirement}}</td>
                 <td>

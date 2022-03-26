@@ -12,5 +12,5 @@ export class Stick implements Item, Gatherable
     public Value: number = 1;
     public RequiredTool: Tool | undefined = undefined;
     public LevelRequirement: number = 1;
-    public Rate: number = 4;
+    public Rate: number = 3;
 }

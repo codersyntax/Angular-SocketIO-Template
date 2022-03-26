@@ -12,18 +12,24 @@ import { CopperPickaxe } from "./copper-pickaxe";
 import { CopperIngot } from "./copper-ingot";
 import { IronIngot } from "./iron-ingot";
 import { IronPickaxe } from "./iron-pickaxe";
+import { WoodenAxe } from "./wooden-axe";
+import { WoodenScythe } from "./wooden-scythe";
+import { StoneScythe } from "./stone-scythe";
 
 export class CraftHandler {
     private levelHandler = new LevelHandler();
     private inventoryHandler = new InventoryHandler();
     public CraftableItems: Craftable[] = [
-        new WoodenPickaxe(),
-        new WoodenSpear(),
-        new StonePickaxe(),
-        new CopperIngot(),
-        new CopperPickaxe(),
+        new IronPickaxe(),
         new IronIngot(),
-        new IronPickaxe()
+        new CopperPickaxe(),
+        new CopperIngot(),
+        new StoneScythe(),
+        new StonePickaxe(),
+        new WoodenSpear(),
+        new WoodenScythe(),
+        new WoodenAxe(),
+        new WoodenPickaxe
     ];
 
     public CraftItem(item: Craftable, player: Character, playerInventory: Inventory) : Inventory {
