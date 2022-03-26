@@ -18,6 +18,8 @@ export class CharacterService {
   public CraftHandler: CraftHandler = new CraftHandler();
   public GatherHandler: GatherHandler = new GatherHandler();
   public SaveString: string;
+  IsBusy : boolean = false;
+  GlobalInterval: any;
 
   constructor() {
     var save = localStorage.getItem('character');

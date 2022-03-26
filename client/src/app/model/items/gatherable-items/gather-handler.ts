@@ -46,11 +46,23 @@ export class GatherHandler {
         {
           case GatherType.Mining:
             var highestTierTool = this.GetHighestTierTool(inventory, ToolType.Mining);
-            gatherRate = (item.Rate / highestTierTool.Multiplyer) * 1000;
+            if(highestTierTool)
+            {
+                gatherRate = (item.Rate / highestTierTool.Multiplyer) * 1000;
+            }
+            else {
+                gatherRate = item.Rate * 1000;
+            }
             break;
           case GatherType.Botany:
             var highestTierTool = this.GetHighestTierTool(inventory, ToolType.Botany);
-            gatherRate = (item.Rate / highestTierTool.Multiplyer) * 1000;
+            if(highestTierTool)
+            {
+                gatherRate = (item.Rate / highestTierTool.Multiplyer) * 1000;
+            }
+            else {
+                gatherRate = item.Rate * 1000;
+            }
             break;
           default:
             gatherRate = item.Rate * 1000;
@@ -59,8 +71,10 @@ export class GatherHandler {
         return gatherRate;
     }
 
-    public GetHighestTierTool(inventory: Inventory, type: ToolType) : Tool {
+    public GetHighestTierTool(inventory: Inventory, type: ToolType) : Tool | undefined {
+        if(inventory.Items.length == 0) return undefined;
         var tools = inventory.Items.filter(item => item.Item.Type == ItemType.Tool);
+        if(tools.length == 0) return undefined;
         var typeTools = tools.filter(item => (item.Item as unknown as Tool).ToolType == type);
         var currentMaxLevelTool = Math.max.apply(Math, typeTools.map(function(o) { return o.Item.LevelRequirement; }))
         return (typeTools.find(tool => tool.Item.LevelRequirement == currentMaxLevelTool)?.Item as unknown as Tool);

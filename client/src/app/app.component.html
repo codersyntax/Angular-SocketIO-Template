@@ -10,9 +10,11 @@
                 <li><a routerLink="">Home</a></li>
                 <li><a routerLink="/inventory">Inventory</a></li>
                 <li><a routerLink="/market">Market Board</a></li>
+                <li><a routerLink="/gather">Gather</a></li>
+                <li><a routerLink="/craft">Craft</a></li>
               </ul>
               <p>Activity Log</p>
-              <textarea style="width: 90%; height: 100px;" #activityLog></textarea>
+              <textarea style="width: 90%; height: 100px;" [(ngModel)]="ToastService.Message" readonly></textarea>
               <h4>Global Chat</h4>
               <p><textarea style="width:90%; height: 100px;" #chatTextArea readonly></textarea></p>
               <p>Message: <input style="width:90%;" type="text" #messageTextField (keyup.enter)="onChatMessageEnter()" /></p>
@@ -22,7 +24,13 @@
               </div>
         </div>
         <div class="topbar">
-            Top Bar
+            <button (click)="ResetCharacter();">Reset Character</button>{{CharacterService.Character.Name}}&nbsp;&nbsp;&nbsp;
+            <button (click)="OnDecreaseXPClick()">-</button>
+            <button (click)="OnAddXPClick()">+</button>&nbsp;
+            Level: {{CharacterService.Character.Level}} \ Experience: {{CharacterService.Character.Experience}}&nbsp;&nbsp;&nbsp;
+            <button (click)="CharacterService.Character.Currency = CharacterService.Character.Currency - 10; UpdateStorage();">-</button>
+            <button (click)="CharacterService.Character.Currency = CharacterService.Character.Currency + 20; UpdateStorage();">+</button>&nbsp;
+            Currency: {{CharacterService.Character.Currency}}
         </div>
         <div class="content-area">
             <router-outlet></router-outlet>

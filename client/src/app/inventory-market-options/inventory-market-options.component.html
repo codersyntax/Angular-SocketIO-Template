@@ -1,0 +1,6 @@
+<select (change)="OnCountSelect($event)">
+    <option *ngFor="let count of Counter(Item.Count); let i = index">{{i + 1}}</option>
+</select>
+<input placeholder="Price" class="price-input-field" (change)="SetPrice($event)" />
+<button *ngIf="Price == 0" class="disabled" (click)="AddItemToMarket(Item)" disabled="disabled">Sell</button>
+<button *ngIf="Price != 0"  (click)="AddItemToMarket(Item)">Sell</button>

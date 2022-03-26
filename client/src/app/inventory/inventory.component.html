@@ -12,9 +12,8 @@
     <tbody>
         <tr *ngFor="let inventoryItem of CharacterService.Character.Inventory.Items">
             <td title="{{inventoryItem.Item.Description}}">
-                {{inventoryItem.Item.Name}}&nbsp;
-                <button (click)="AddItemToMarket(inventoryItem)">Sell</button>
-                <button (click)="AddAllItemToMarket(inventoryItem)">Sell All</button>
+                {{inventoryItem.Item.Name}}<br/>
+                <app-inventory-market-options [Item] = "inventoryItem"></app-inventory-market-options>
             </td>
             <td>{{ItemType[inventoryItem.Item.Type]}}</td>
             <td>{{inventoryItem.Item.Description}}</td>

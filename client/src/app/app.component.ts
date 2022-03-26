@@ -1,30 +1,24 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Injectable, ViewChild } from '@angular/core';
 import { CharacterService } from './character.service';
 import { Character } from './model/character/character';
 import { ItemType } from './model/items/item';
+import { ToastService } from './toast.service';
 import { WebSocketService } from './web-socket.service';
 
 @Component({
   selector: 'app-root',  
-  providers: [
-    WebSocketService,
-    CharacterService
-  ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  @ViewChild('activityLog') public ActivityLog!: ElementRef;
   @ViewChild('messageTextField') public MessageTextField!: ElementRef;
   @ViewChild('chatTextArea') public ChatTextArea!: ElementRef;
   
   SaveString!: string;
-  IsBusy : boolean = false;
-  GlobalInterval: any;
   CurrentOnlinePlayers : Character[] | undefined;
   ItemType = ItemType;
 
-  constructor(public CharacterService: CharacterService, private WebSocketService: WebSocketService) {
+  constructor(public ToastService: ToastService, public CharacterService: CharacterService, private WebSocketService: WebSocketService) {
   }
 
   public ngOnInit(): void {
@@ -45,19 +39,8 @@ export class AppComponent {
     });
   }
 
-  // public OnSectionClick(event: any) {
-  //   console.log(event.target.nextSibling.style.display);
-  //   if(event.target.nextSibling.style.display == "block")
-  //   {
-  //     event.target.nextSibling.style.display == "none";
-  //   }
-  //   else if(event.target.nextSibling.style.display == "none")
-  //   {
-  //     event.target.nextSibling.style.display = "block";
-  //   }
-  // }
-
   public onChatMessageEnter() {
+    console.log(this.ToastService);
     var chatMessage = new Date().toLocaleTimeString() + " " + this.CharacterService.Character.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
     this.WebSocketService.socket.emit("chatMessage", chatMessage);
     this.MessageTextField.nativeElement.value = "";
@@ -68,76 +51,27 @@ export class AppComponent {
     this.WebSocketService.socket.emit("userSubmittedPlayerName", this.CharacterService.Character);
   }
 
+  ResetCharacter() {
+    (this.CharacterService.Character as any) = undefined;
+    localStorage.clear();
+  }
+
+  OnAddXPClick() {
+    this.CharacterService.Character.Experience = this.CharacterService.Character.Experience + 50;
+    this.CharacterService.Character.Level = this.CharacterService.LevelHandler.CalculateLevel(this.CharacterService.Character.Experience);
+    this.UpdateStorage();
+    this.ToastService.UpdateToast("Added xp");
+  }
+
+  OnDecreaseXPClick() {
+    this.CharacterService.Character.Experience -= 50;
+    this.CharacterService.Character.Level = this.CharacterService.LevelHandler.CalculateLevel(this.CharacterService.Character.Experience);
+    this.UpdateStorage();
+    this.ToastService.UpdateToast("Decreased xp");
+  }
+
   UpdateStorage() {
     this.SaveString = JSON.stringify(this.CharacterService.Character);
     localStorage.setItem('character', this.SaveString);
   }
-
-  // GatherItem(item: Gatherable) {
-  //   if(this.IsBusy)
-  //   {
-  //     this.IsBusy = false;
-  //     if(this.GlobalInterval != undefined) {
-  //       clearInterval(this.GlobalInterval);
-  //       this.GlobalInterval = undefined;
-  //     }
-  //   }
-  //   else {
-  //     if(this.CharacterService.GatherHandler.HasRequiredTool(item.RequiredTool, this.CharacterService.Character.Inventory))
-  //     {
-  //       if(item.LevelRequirement <= this.CharacterService.Character.Level) {
-  //         this.IsBusy = true;
-  //         var gatherRate = this.CharacterService.GatherHandler.DetermineGatherRate(this.CharacterService.Character.Inventory, item);
-  //         this.GlobalInterval = setInterval(() => {
-  //           this.CharacterService.GatherHandler.GatherItems(item, this.CharacterService.Character, this.CharacterService.Character.Inventory);
-  //           this.UpdateStorage();
-  //         }, gatherRate)
-  //       }
-  //       else {
-  //         this.ActivityLog.nativeElement.value = "You are not the required level to gather " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
-  //       }
-  //     }
-  //     else {
-  //       this.IsBusy = false;
-  //       this.ActivityLog.nativeElement.value = "You do not possess the required tool to gather " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
-  //     }
-
-  //   }
-  // }
-
-  // CraftItem(item: Craftable) {
-  //   if(this.IsBusy)
-  //   {
-  //     this.IsBusy = false;
-  //     if(this.GlobalInterval != undefined) {
-  //       clearInterval(this.GlobalInterval);
-  //       this.GlobalInterval = undefined;
-  //     }
-  //   }
-  //   else {
-  //     if(this.CharacterService.CraftHandler.HasRequiredMaterials(this.CharacterService.Character.Inventory, item.Recipe))
-  //     {
-  //       if(item.LevelRequirement <= this.CharacterService.Character.Level) {
-  //         this.IsBusy = true;
-  //         this.GlobalInterval = setInterval(() => {
-  //           this.CharacterService.CraftHandler.CraftItem(item, this.CharacterService.Character, this.CharacterService.Character.Inventory);
-  //           this.UpdateStorage();
-  //         }, item.CraftTime * 1000)
-  //       }
-  //       else {
-  //         this.ActivityLog.nativeElement.value = "You are not the required level to craft " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
-  //       }
-  //     }
-  //     else {
-  //       this.IsBusy = false;
-  //       this.ActivityLog.nativeElement.value = "You do not possess the required materials to craft " + item.Name + "\n" + this.ActivityLog.nativeElement.value;
-  //     }
-
-  //   }
-  // }
-
-  // CancelAction() {
-  //   clearInterval(this.GlobalInterval);
-  //   this.GlobalInterval = undefined;
-  // }
 }

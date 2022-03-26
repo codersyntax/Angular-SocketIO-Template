@@ -1,66 +1,35 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { CharacterService } from '../character.service';
-import { InventoryItem } from '../model/inventory/inventory-item';
 import { Item, ItemType } from '../model/items/item';
-import { MarketItem } from '../model/market/market-item';
+import { ToastService } from '../toast.service';
 import { WebSocketService } from '../web-socket.service';
 
 @Component({
   selector: 'app-inventory',
-  providers: [ 
-    WebSocketService,
-    CharacterService
-  ],
   templateUrl: './inventory.component.html',
   styleUrls: ['./inventory.component.css']
 })
-export class InventoryComponent implements OnInit {
+
+export class InventoryComponent {
 
   ItemType = ItemType;
 
-  constructor(private router: Router, public CharacterService: CharacterService, private WebSocketService: WebSocketService) {
-    var save = localStorage.getItem('character');
-    if(save)
-    {
-      var character = JSON.parse(save);
-      this.WebSocketService.socket.emit("userSubmittedPlayerName", character);
-      this.CharacterService.SetExistingCharacter(character);
-    }
-    else {
-      this.router.navigate(['']);
-    }
-  }
+  constructor(public ToastService: ToastService, public CharacterService: CharacterService, private WebSocketService: WebSocketService) {}
 
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-
-  }
-
-  AddItemToMarket(item: InventoryItem) {
-    this.CharacterService.Character.Inventory.Items = this.CharacterService.InventoryHandler.RemoveItem(this.CharacterService.Character.Inventory.Items, item.Item);
-    var marketItem = new MarketItem(this.CharacterService.Character, item.Item, 1, 1);
-    this.WebSocketService.socket.emit("AddMarketItem", JSON.stringify(marketItem));
-    this.UpdateStorage();
-  }
-
-  AddAllItemToMarket(item: InventoryItem) {
-    this.CharacterService.Character.Inventory.Items = this.CharacterService.InventoryHandler.RemoveItems(this.CharacterService.Character.Inventory.Items, item.Item, item.Count);
-    var marketItem = new MarketItem(this.CharacterService.Character, item.Item, item.Count, 1);
-    this.WebSocketService.socket.emit("AddMarketItem", JSON.stringify(marketItem));
-    this.UpdateStorage();
+  ngOnInit() {
+    console.log(this.CharacterService);
   }
 
   AddItemToInventory(item: Item) {
     this.CharacterService.Character.Inventory.Items = this.CharacterService.InventoryHandler.AddItem(this.CharacterService.Character.Inventory.Items, item);
     this.UpdateStorage();
+    this.ToastService.UpdateToast("Added " + item.Name + " to inventory");
   }
 
   RemoveItemFromInventory(item: Item) {
     this.CharacterService.Character.Inventory.Items = this.CharacterService.InventoryHandler.RemoveItem(this.CharacterService.Character.Inventory.Items, item);
     this.UpdateStorage();
+    this.ToastService.UpdateToast("Removed " + item.Name + " to inventory");
   }
 
   UpdateStorage() {
