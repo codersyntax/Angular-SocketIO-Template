@@ -1,4 +1,3 @@
-import { ElementRef } from "@angular/core";
 import { Item } from "../items/item";
 import { InventoryItem } from "./inventory-item";
 import { Stick } from "../items/gatherable-items/stick";
@@ -14,7 +13,7 @@ export class InventoryHandler {
         new GoldOre()
     ]
 
-    public AddItem(items: InventoryItem[], item: Item, activityLog: ElementRef): InventoryItem[] {
+    public AddItem(items: InventoryItem[], item: Item): InventoryItem[] {
         if(items == undefined) return items;
         var itemIndex = items.findIndex(i => i.Item.Name == item.Name);
         if(itemIndex < 0)
@@ -22,14 +21,12 @@ export class InventoryHandler {
             var newItem = new InventoryItem(item);
             newItem.Count++;
             items.push(newItem);
-            activityLog.nativeElement.value = newItem.Item.Name + " add to inventory\n" + activityLog.nativeElement.value;
             return items;
         }
         else {
             for(var i = 0; i < items.length; i++) {
                 if(items[i].Item.Name == item.Name) {
                     items[i].Count++;
-                    activityLog.nativeElement.value = items[i].Item.Name + " add to inventory\n" + activityLog.nativeElement.value;
                     break;
                 }
             }
@@ -37,7 +34,7 @@ export class InventoryHandler {
         return items;
     }
 
-    public AddItems(items: InventoryItem[], item: Item, count: number, activityLog: ElementRef): InventoryItem[] {
+    public AddItems(items: InventoryItem[], item: Item, count: number): InventoryItem[] {
         if(items == undefined) return items;
         var itemIndex = items.findIndex(i => i.Item.Name == item.Name);
         if(itemIndex < 0)
@@ -45,14 +42,12 @@ export class InventoryHandler {
             var newItem = new InventoryItem(item);
             newItem.Count = newItem.Count + count;
             items.push(newItem);
-            activityLog.nativeElement.value = newItem.Item.Name + " add to inventory\n" + activityLog.nativeElement.value;
             return items;
         }
         else {
             for(var i = 0; i < items.length; i++) {
                 if(items[i].Item.Name == item.Name) {
                     items[i].Count = items[i].Count + count;
-                    activityLog.nativeElement.value = items[i].Item.Name + " add to inventory\n" + activityLog.nativeElement.value;
                     break;
                 }
             }
@@ -60,7 +55,7 @@ export class InventoryHandler {
         return items;
     }
 
-    public RemoveItem(items: InventoryItem[], item: Item, activityLog: ElementRef): InventoryItem[] {
+    public RemoveItem(items: InventoryItem[], item: Item): InventoryItem[] {
         if(items == undefined) return items;
         for(var i = 0; i < items.length; i++) {
             if(items[i].Item.Name == item.Name)
@@ -72,14 +67,13 @@ export class InventoryHandler {
                 else {
                     items[i].Count--;
                 }
-                activityLog.nativeElement.value = item.Name + " removed from inventory\n" + activityLog.nativeElement.value;
                 break;
             }
         }
         return items;
     }
 
-    public RemoveItems(items: InventoryItem[], item: Item, count: number, activityLog: ElementRef): InventoryItem[] {
+    public RemoveItems(items: InventoryItem[], item: Item, count: number): InventoryItem[] {
         if(items == undefined) return items;
         for(var i = 0; i < items.length; i++) {
             var inventoryItem = items[i];
@@ -88,7 +82,6 @@ export class InventoryHandler {
                 if(count >= items[i].Count)
                 {
                     items = items.filter(t => t.Item.Name != item.Name);
-                    activityLog.nativeElement.value = "(" + inventoryItem.Count + ") " + item.Name + " removed from inventory\n" + activityLog.nativeElement.value;
                     break;
                 }
                 else {

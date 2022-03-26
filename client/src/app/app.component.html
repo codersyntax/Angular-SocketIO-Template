@@ -1,1 +1,31 @@
-<router-outlet></router-outlet>
+<div class="container">
+    <div #logIn *ngIf='!CharacterService.Character'>
+        <input #logInTextField type="text" (keyup.enter)="onNameEnter(logInTextField.value)" />
+    </div>
+    <ng-container *ngIf="CharacterService.Character">
+
+        <div class="sidebar">
+            <img class="logo" />
+            <ul>
+                <li><a routerLink="">Home</a></li>
+                <li><a routerLink="/inventory">Inventory</a></li>
+                <li><a routerLink="/market">Market Board</a></li>
+              </ul>
+              <p>Activity Log</p>
+              <textarea style="width: 90%; height: 100px;" #activityLog></textarea>
+              <h4>Global Chat</h4>
+              <p><textarea style="width:90%; height: 100px;" #chatTextArea readonly></textarea></p>
+              <p>Message: <input style="width:90%;" type="text" #messageTextField (keyup.enter)="onChatMessageEnter()" /></p>
+              <h4>Current Online Players</h4>
+              <div *ngFor="let player of CurrentOnlinePlayers">
+                  <p>{{player.Name}}</p>
+              </div>
+        </div>
+        <div class="topbar">
+            Top Bar
+        </div>
+        <div class="content-area">
+            <router-outlet></router-outlet>
+        </div>
+    </ng-container>
+</div>

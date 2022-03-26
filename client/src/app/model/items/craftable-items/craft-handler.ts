@@ -1,4 +1,3 @@
-import { ElementRef } from "@angular/core";
 import { Character } from "../../character/character";
 import { Inventory } from "../../inventory/inventory";
 import { InventoryHandler } from "../../inventory/inventory-handler";
@@ -27,7 +26,7 @@ export class CraftHandler {
         new IronPickaxe()
     ];
 
-    public CraftItem(item: Craftable, player: Character, playerInventory: Inventory, activityLog: ElementRef) : Inventory {
+    public CraftItem(item: Craftable, player: Character, playerInventory: Inventory) : Inventory {
         if(item.Type != ItemType.Material)
         {
             if(item.LevelRequirement <= player.Level) {
@@ -35,20 +34,19 @@ export class CraftHandler {
                 if(playerHaveRequiredMaterials)
                 {
                     this.RemoveRequiredMaterials(playerInventory, item.Recipe);
-                    this.inventoryHandler.AddItem(playerInventory.Items, item, activityLog);
-                    activityLog.nativeElement.value = item.Name + " crafted and added to inventory\n" + activityLog.nativeElement.value;
+                    this.inventoryHandler.AddItem(playerInventory.Items, item);
                     player.Experience += item.Experience;
                     player.Level = this.levelHandler.CalculateLevel(player.Experience);
                     return playerInventory;
                 }
                 else
                 {
-                    activityLog.nativeElement.value = "You do not have all the required materials to create " + item.Name + "...\n" + activityLog.nativeElement.value;
+                    //Does not have right amount of materials
                     return playerInventory;
                 }
             }
             else {
-                activityLog.nativeElement.value = "You are not the required level to create " + item.Name + "\n" + activityLog.nativeElement.value;
+                //Not required level
             }
         }
         return playerInventory;

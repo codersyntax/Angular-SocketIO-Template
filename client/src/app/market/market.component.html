@@ -1,0 +1,19 @@
+<h3>Market Board</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Count</th>
+            <th>Listing Owner</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let listing of Market.Listings">
+            <td>{{listing.Item.Name}}</td>
+            <td>{{listing.Price * listing.Count}}</td>
+            <td>{{listing.Count}}</td>
+            <td>{{listing.ListingOwner.Name}}</td>
+        </tr>
+    </tbody>
+</table>

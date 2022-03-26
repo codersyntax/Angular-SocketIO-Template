@@ -1,4 +1,3 @@
-import { ElementRef } from "@angular/core";
 import { Character } from "../../character/character";
 import { Inventory } from "../../inventory/inventory";
 import { InventoryHandler } from "../../inventory/inventory-handler";
@@ -23,11 +22,10 @@ export class GatherHandler {
         new GoldOre()
     ];
 
-    public GatherItems(item: Gatherable, player: Character, playerInventory: Inventory, activityLog: ElementRef) : Inventory {
+    public GatherItems(item: Gatherable, player: Character, playerInventory: Inventory) : Inventory {
         if(item.Type == ItemType.Material)
         {
-            this.inventoryHandler.AddItem(playerInventory.Items, item, activityLog);
-            activityLog.nativeElement.value = item.Name + " gathered\n" + activityLog.nativeElement.value;
+            this.inventoryHandler.AddItem(playerInventory.Items, item);
             player.Experience += item.Experience;
             player.Level = this.levelHandler.CalculateLevel(player.Experience);
             return playerInventory;
