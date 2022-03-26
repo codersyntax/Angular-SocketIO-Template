@@ -8,11 +8,12 @@ import { Tool, ToolType } from "./tool";
 export class StonePickaxe implements Item, Tool, Craftable {
     public Name: string = "Stone Pickaxe";
     public Experience: number = 78;
+    public ExperienceType: UseType = UseType.Weaponsmithing;
     public Type: ItemType = ItemType.Tool;
     public UseType: UseType = UseType.Mining;
     public Description: string = "Stone pickaxe tool suited for mining";
     public Value: number = 6;
-    public LevelRequirement: number = 5;
+    public LevelRequirement: number = 4;
     public Multiplyer: number = 1.25;
     public ToolType: ToolType = ToolType.Mining;
     public Recipe: RecipeItem[] = [

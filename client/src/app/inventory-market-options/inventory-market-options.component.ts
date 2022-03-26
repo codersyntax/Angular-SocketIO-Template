@@ -13,7 +13,7 @@ import { MarketItem } from '../model/market/market-item';
 export class InventoryMarketOptionsComponent {
 
   @Input() Item!: InventoryItem;
-  private AmountToSell: number = 0;
+  private AmountToSell: number = 1;
   public Price: number = 0;
 
   constructor(public ToastService: ToastService, public CharacterService: CharacterService, private WebSocketService: WebSocketService) { }

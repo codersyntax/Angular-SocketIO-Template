@@ -8,8 +8,9 @@ export class WoodenSpear implements Item, Craftable, Weapon
 {
     public Name: string = "Wooden Spear";
     public Experience: number = 48;
+    public ExperienceType: number = UseType.Weaponsmithing;
     public Type: ItemType = ItemType.Weapon;
-    public UseType: UseType = UseType.Combat;
+    public UseType: UseType = UseType.PhysicalCombat;
     public Description: string = "Its a wooden spear...";
     public Value: number = 3;
     public LevelRequirement: number = 3;

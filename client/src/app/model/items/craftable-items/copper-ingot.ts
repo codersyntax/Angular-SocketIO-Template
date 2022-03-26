@@ -6,6 +6,7 @@ import { CopperOre } from "../gatherable-items/copper-ore";
 export class CopperIngot implements Item, Craftable {
     public Name: string = "Copper Ingot";
     public Experience: number = 48;
+    public ExperienceType: UseType = UseType.Smithing;
     public Type: ItemType = ItemType.Material;
     public UseType: UseType = UseType.None;
     public Description: string = "Copper ingots is essential ingredient for a variety of different tools and armor";

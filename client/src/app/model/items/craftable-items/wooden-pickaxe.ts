@@ -7,11 +7,12 @@ import { Tool, ToolType } from "./tool";
 export class WoodenPickaxe implements Item, Tool, Craftable {
     public Name: string = "Wooden Pickaxe";
     public Experience: number = 42;
+    public ExperienceType: UseType = UseType.Weaponsmithing;
     public Type: ItemType = ItemType.Tool;
     public UseType: UseType = UseType.Mining;
     public Description: string = "Useful starter tool for mining";
     public Value: number = 3;
-    public LevelRequirement: number = 2;
+    public LevelRequirement: number = 1;
     public Multiplyer: number = 1;
     public ToolType: ToolType = ToolType.Mining;
     public Recipe: RecipeItem[] = [

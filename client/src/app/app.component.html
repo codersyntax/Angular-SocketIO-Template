@@ -10,8 +10,9 @@
                 <li><a routerLink="">Home</a></li>
                 <li><a routerLink="/inventory">Inventory</a></li>
                 <li><a routerLink="/market">Market Board</a></li>
-                <li><a routerLink="/gather">Gather</a></li>
-                <li><a routerLink="/craft">Craft</a></li>
+                <li><span><a routerLink="/mining">Mining</a></span><span class="level">Level {{CharacterService.Character.Skills.MiningLevel}}</span></li>
+                <li><span><a routerLink="/botany">Botany</a></span><span class="level">Level {{CharacterService.Character.Skills.BotanyLevel}}</span></li>
+                <li><span><a routerLink="/weaponsmithing">Weaponsmithing</a></span><span class="level">Level {{CharacterService.Character.Skills.WeaponsmithingLevel}}</span></li>
               </ul>
               <p>Activity Log</p>
               <textarea style="width: 90%; height: 100px;" [(ngModel)]="ToastService.Message" readonly></textarea>
@@ -24,13 +25,12 @@
               </div>
         </div>
         <div class="topbar">
-            <button (click)="ResetCharacter();">Reset Character</button>{{CharacterService.Character.Name}}&nbsp;&nbsp;&nbsp;
-            <button (click)="OnDecreaseXPClick()">-</button>
-            <button (click)="OnAddXPClick()">+</button>&nbsp;
-            Level: {{CharacterService.Character.Level}} \ Experience: {{CharacterService.Character.Experience}}&nbsp;&nbsp;&nbsp;
+            <button (click)="ResetCharacter();">Reset Character</button>
+            <button (click)="UpdateStorage();">Save Character</button>
+            {{CharacterService.Character.Name}}&nbsp;&nbsp;&nbsp;
             <button (click)="CharacterService.Character.Currency = CharacterService.Character.Currency - 10; UpdateStorage();">-</button>
-            <button (click)="CharacterService.Character.Currency = CharacterService.Character.Currency + 20; UpdateStorage();">+</button>&nbsp;
             Currency: {{CharacterService.Character.Currency}}
+            <button (click)="CharacterService.Character.Currency = CharacterService.Character.Currency + 20; UpdateStorage();">+</button>
         </div>
         <div class="content-area">
             <router-outlet></router-outlet>

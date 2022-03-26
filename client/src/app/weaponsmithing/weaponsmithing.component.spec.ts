@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CraftComponent } from './craft.component';
+import { WeaponsmithingComponent } from './weaponsmithing.component';
 
-describe('CraftComponent', () => {
-  let component: CraftComponent;
-  let fixture: ComponentFixture<CraftComponent>;
+describe('WeaponsmithingComponent', () => {
+  let component: WeaponsmithingComponent;
+  let fixture: ComponentFixture<WeaponsmithingComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CraftComponent ]
+      declarations: [ WeaponsmithingComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CraftComponent);
+    fixture = TestBed.createComponent(WeaponsmithingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

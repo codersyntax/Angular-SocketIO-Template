@@ -3,16 +3,17 @@ import { ToastService } from '../toast.service';
 import { CharacterService } from '../character.service';
 import { WebSocketService } from '../web-socket.service';
 import { ItemType } from '../model/items/item';
-import { Craftable } from '../model/items/craftable-items/craftable';
+import { Craftable, UseType } from '../model/items/craftable-items/craftable';
 
 @Component({
-  selector: 'app-craft',
-  templateUrl: './craft.component.html',
-  styleUrls: ['./craft.component.css']
+  selector: 'app-weaponsmithing',
+  templateUrl: './weaponsmithing.component.html',
+  styleUrls: ['./weaponsmithing.component.css']
 })
-export class CraftComponent implements OnInit {
+export class WeaponsmithingComponent implements OnInit {
 
   ItemType = ItemType;
+  ExperienceType = UseType;
   
   constructor(public ToastService: ToastService, public CharacterService: CharacterService, private WebSocketService: WebSocketService) { }
 
@@ -29,7 +30,7 @@ export class CraftComponent implements OnInit {
     }
     else {
       if (this.CharacterService.CraftHandler.HasRequiredMaterials(this.CharacterService.Character.Inventory, item.Recipe)) {
-        if (item.LevelRequirement <= this.CharacterService.Character.Level) {
+        if (item.LevelRequirement <= this.CharacterService.Character.Skills.WeaponsmithingLevel) {
           this.CharacterService.IsBusy = true;
           this.CharacterService.GlobalInterval = setInterval(() => {
             this.CharacterService.CraftHandler.CraftItem(item, this.CharacterService.Character, this.CharacterService.Character.Inventory);

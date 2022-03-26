@@ -1,25 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ToastService } from '../toast.service';
 import { CharacterService } from '../character.service';
 import { WebSocketService } from '../web-socket.service';
 import { Item, ItemType } from '../model/items/item';
-import { Gatherable } from '../model/items/gatherable-items/gatherable';
+import { Gatherable, GatherType } from '../model/items/gatherable-items/gatherable';
 
 @Component({
-  selector: 'app-gather',
-  templateUrl: './gather.component.html',
-  styleUrls: ['./gather.component.css']
+  selector: 'app-botany',
+  templateUrl: './botany.component.html',
+  styleUrls: ['./botany.component.css']
 })
-export class GatherComponent implements OnInit {
+export class BotanyComponent {
 
   ItemType = ItemType;
-  
+  GatherType = GatherType;
+
   constructor(public ToastService: ToastService, public CharacterService: CharacterService, private WebSocketService: WebSocketService) { }
 
-  ngOnInit(): void {
-  }
-
- GatherItem(item: Gatherable) {
+  GatherItem(item: Gatherable) {
     if(this.CharacterService.IsBusy)
     {
       this.CharacterService.IsBusy = false;
@@ -31,7 +29,7 @@ export class GatherComponent implements OnInit {
     else {
       if(this.CharacterService.GatherHandler.HasRequiredTool(item.RequiredTool, this.CharacterService.Character.Inventory))
       {
-        if(item.LevelRequirement <= this.CharacterService.Character.Level) {
+        if(item.LevelRequirement <= this.CharacterService.Character.Skills.BotanyLevel) {
           this.CharacterService.IsBusy = true;
           var gatherRate = this.CharacterService.GatherHandler.DetermineGatherRate(this.CharacterService.Character.Inventory, item);
           this.CharacterService.GlobalInterval = setInterval(() => {
@@ -66,4 +64,5 @@ export class GatherComponent implements OnInit {
   UpdateStorage() {
     localStorage.setItem('character', JSON.stringify(this.CharacterService.Character));
   }
+
 }

@@ -8,6 +8,7 @@ import { Tool, ToolType } from "./tool";
 export class CopperPickaxe implements Item, Tool, Craftable {
     public Name: string = "Copper Pickaxe";
     public Experience: number = 98;
+    public ExperienceType: UseType = UseType.Weaponsmithing;
     public Type: ItemType = ItemType.Tool;
     public UseType: UseType = UseType.Mining;
     public Description: string = "Copper pickaxe tool better suited for mining";

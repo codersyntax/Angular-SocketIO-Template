@@ -6,14 +6,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { MarketComponent } from './market/market.component';
-import { WebSocketService } from './web-socket.service';
-import { CharacterService } from './character.service';
 import { InventoryComponent } from './inventory/inventory.component';
-import { ToastService } from './toast.service';
 import { FormsModule } from '@angular/forms';
 import { InventoryMarketOptionsComponent } from './inventory-market-options/inventory-market-options.component';
-import { GatherComponent } from './gather/gather.component';
-import { CraftComponent } from './craft/craft.component';
+import { MiningComponent } from './mining/mining.component';
+import { BotanyComponent } from './botany/botany.component';
+import { WeaponsmithingComponent } from './weaponsmithing/weaponsmithing.component';
 
 const hostname = window.location.hostname;
 const url = (hostname === 'localhost') ? `${window.location.protocol}//${hostname}:5000` : "";
@@ -26,8 +24,9 @@ const config: SocketIoConfig = { url, options: {} };
     MarketComponent,
     InventoryComponent,
     InventoryMarketOptionsComponent,
-    GatherComponent,
-    CraftComponent
+    MiningComponent,
+    BotanyComponent,
+    WeaponsmithingComponent
   ],
   imports: [
     FormsModule,

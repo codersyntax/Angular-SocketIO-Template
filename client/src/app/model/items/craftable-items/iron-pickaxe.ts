@@ -8,11 +8,12 @@ import { IronIngot } from "./iron-ingot";
 export class IronPickaxe implements Item, Tool, Craftable {
     public Name: string = "Iron Pickaxe";
     public Experience: number = 125;
+    public ExperienceType: UseType = UseType.Weaponsmithing;
     public Type: ItemType = ItemType.Tool;
     public UseType: UseType = UseType.Mining;
     public Description: string = "Iron pickaxe tool better suited for mining";
     public Value: number = 18;
-    public LevelRequirement: number = 12;
+    public LevelRequirement: number = 13;
     public Multiplyer: number = 1.75;
     public ToolType: ToolType = ToolType.Mining;
     public Recipe: RecipeItem[] = [

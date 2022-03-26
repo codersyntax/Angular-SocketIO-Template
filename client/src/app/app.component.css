@@ -28,12 +28,21 @@
     padding: 0;
     background-color:#555555;
   }
+
+  .sidebar > ul li {
+    padding: 8px 0 8px 16px;
+    display: block;
+  }
   
   .sidebar > ul li a {
     color: #fff;
-    display: block;
-    padding: 8px 0 8px 16px;
     text-decoration: none;
+  }
+
+  .sidebar > ul > li > .level {
+    float: right;
+    padding-right: 8px;
+    font-size: small;
   }
 
   .topbar {

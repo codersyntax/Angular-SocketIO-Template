@@ -16,5 +16,7 @@ export abstract class Gatherable {
 export enum GatherType {
   Mining,
   Botany,
+  Fishing,
+  Farming,
   None
 }

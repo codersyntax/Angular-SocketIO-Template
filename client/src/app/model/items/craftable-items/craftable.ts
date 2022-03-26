@@ -4,6 +4,7 @@ import { RecipeItem } from "./recipe-item";
 export abstract class Craftable {
     public Name!: string;
     public Experience!: number;
+    public ExperienceType!: UseType;
     public Type!: ItemType;
     public UseType!: UseType;
     public LevelRequirement!: number;
@@ -16,6 +17,16 @@ export abstract class Craftable {
 export enum UseType {
   Mining,
   Botany,
-  Combat,
+  Farming,
+  Fishing,
+  Alchemy,
+  MagicalCombat,
+  PhysicalCombat,
+  Cooking,
+  Smithing,
+  Weaponsmithing,
+  Armorer,
+  Weaver,
+  Goldsmithing,
   None
 }

@@ -12,7 +12,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let item of CharacterService.GatherHandler.GatherableItems">
-            <ng-container *ngIf="CharacterService.Character.Level >= item.LevelRequirement">
+            <ng-container *ngIf="CharacterService.Character.Skills.BotanyLevel >= item.LevelRequirement && item.GatherType == GatherType.Botany">
                 <td title="{{item.Description}}">
                     <button *ngIf="CharacterService.IsBusy" (click)="CancelAction(); CharacterService.IsBusy = false;">Cancel</button><button *ngIf="!CharacterService.IsBusy" (click)="GatherItem(item)">Gather</button>&nbsp;
                     {{item.Name}}

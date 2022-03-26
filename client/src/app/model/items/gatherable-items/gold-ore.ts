@@ -10,7 +10,7 @@ export class GoldOre implements Item, Gatherable
     public GatherType: GatherType = GatherType.Mining;
     public Description: string = "Its gold...";
     public Value: number = 10;
-    public LevelRequirement: number = 10;
+    public LevelRequirement: number = 14;
     public RequiredTool: Tool | undefined = undefined;
     public Rate: number = 16;
 }
