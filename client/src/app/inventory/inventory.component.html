@@ -1,4 +1,3 @@
-<h3>Inventory</h3>
 <table>
     <thead>
         <tr>
@@ -27,3 +26,9 @@
         </tr>
     </tbody>
 </table>
+
+<div class="item-container">
+    <ng-container *ngFor="let item of CharacterService.Character.Inventory.Items">
+        <app-inventory-item [Item]="item"></app-inventory-item>
+    </ng-container>
+</div>

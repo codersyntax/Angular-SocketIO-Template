@@ -1,0 +1,6 @@
+.skills-container {
+    box-sizing: border-box;
+    width: 100%;
+    background-color: var(--background3);
+    padding: 16px;
+}

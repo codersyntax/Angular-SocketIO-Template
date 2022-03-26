@@ -8,27 +8,27 @@
             <img class="logo" />
             <ul>
                 <li class="active" (click)="OnSelect($event)" routerLink="">Home</li>
-                <li (click)="OnSelect($event)"  routerLink="/inventory">Inventory</li>
-                <li (click)="OnSelect($event)"  routerLink="/market">Market Board</li>
-                <li (click)="OnSelect($event)"  routerLink="/mining"><span>Mining</span><span class="level">Level {{CharacterService.Character.Skills.MiningLevel}}</span></li>
-                <li (click)="OnSelect($event)"  routerLink="/botany"><span>Botany</span><span class="level">Level {{CharacterService.Character.Skills.BotanyLevel}}</span></li>
-                <li (click)="OnSelect($event)"  routerLink="/weaponsmithing"><span>Weaponsmithing</span><span class="level">Level {{CharacterService.Character.Skills.WeaponsmithingLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/inventory">Inventory</li>
+                <li (click)="OnSelect($event)" routerLink="/market">Market Board</li>
+                <li (click)="OnSelect($event)" routerLink="/mining"><span>Mining</span><span class="level">Level {{CharacterService.Character.Skills.MiningLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/botany"><span>Botany</span><span class="level">Level {{CharacterService.Character.Skills.BotanyLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/weaponsmithing"><span>Weaponsmithing</span><span class="level">Level {{CharacterService.Character.Skills.WeaponsmithingLevel}}</span></li>
               </ul>
-              <p>Activity Log</p>
+              <h5>Activity Log</h5>
               <textarea style="width: 90%; height: 100px;" [(ngModel)]="ToastService.Message" readonly></textarea>
-              <h4>Global Chat</h4>
-              <p><textarea style="width:90%; height: 100px;" #chatTextArea readonly></textarea></p>
-              <p>Message: <input style="width:90%;" type="text" #messageTextField (keyup.enter)="onChatMessageEnter()" /></p>
-              <h4>Current Online Players</h4>
+              <h5>Global Chat</h5>
+              <textarea style="width:90%; height: 100px;" #chatTextArea readonly></textarea>
+              <input style="width:90%;" type="text" placeholder="Send message..." #messageTextField (keyup.enter)="onChatMessageEnter()" />
+              <h5>Current Online Players</h5>
               <div *ngFor="let player of CurrentOnlinePlayers">
-                  <p>{{player.Name}}</p>
+                  <h6>{{player.Name}}</h6>
               </div>
         </div>
         <div class="topbar">
             <div>
                 <div>
                     {{CharacterService.Character.Name}}&nbsp;&nbsp;&nbsp;<br/>
-                    <span style="font-size:smaller; color: rgb(211, 199, 38)">{{CharacterService.Character.Currency}} Gold</span>
+                    <span class="currency">{{CharacterService.Character.Currency}} Gold</span>
                 </div>
                 <div>
                     <button (click)="UpdateStorage();">Save Character</button>

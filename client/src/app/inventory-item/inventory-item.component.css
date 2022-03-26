@@ -1,0 +1,42 @@
+.item {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    background-color: var(--interaction);
+    margin: 16px;
+    /* border: 2px solid #fff; */
+    box-shadow: 2px 5px 2px rgba(0,0,0,0.3);
+    text-align: center;
+}
+
+.item > .item-name {
+    position: relative;
+    width: 100px;
+    height: 24px;
+    color: #000;
+    font-weight: 700;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    z-index: 9;
+    margin-top: 20px;
+}
+
+.item > .item-icon > img {
+    width: 120px;
+    position: relative;
+    margin-left: -8px;
+    margin-top: -6px;
+}
+
+.item > .item-count {
+    position: relative;
+    width: 100px;
+    color: #000;
+    font-weight: 700;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    text-align: right;
+    margin-top: -16px;
+    margin-left: -8px;
+}

@@ -1,6 +1,163 @@
+:root {
+    --background: rgb(27, 72, 107);
+    --background2: rgb(13, 54, 85);
+    --background3: rgb(5, 34, 56);
+    --interaction: rgb(242, 172, 52);
+    --interaction2: rgb(252, 118, 52);
+    --color1: rgb(40, 163, 82);
+    --color2: rgb(178, 219, 52);
+    --color3: rgb(255, 255, 255);
+}
+
 body {
-    background-color: #272727;
+    background-color: var(--background3);
     padding: 10px;
-    color: #FFF;
+    color: var(--color3);
     font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+.container {
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--background3);
+}
+
+.sidebar {
+    width: 280px;
+    background: var(--background);
+    height: 100%;
+    position: absolute;
+}
+
+.sidebar > .logo {
+    width: 100%;
+    height: 75px;
+}
+
+.sidebar > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background2);
+}
+
+.sidebar > ul li {
+    padding: 8px 0 8px 16px;
+    display: block;
+    cursor: pointer;
+    border-bottom: 1px solid var(--background);
+    }
+
+.sidebar > ul li:hover {
+    background-color: var(--interaction2);
+}
+
+.sidebar > ul li.active {
+    background-color: var(--interaction2);
+}
+
+.sidebar > ul > li > .level {
+    float: right;
+    padding-right: 8px;
+    font-size: small;
+}
+
+.topbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: calc(100vw - 280px);
+    height: 50px;
+    background-color: var(--background2);
+    color: var(--color3);
+}
+
+.topbar > div {
+    padding: 4px;
+    float: right;
+}
+
+.topbar > div > div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.currency {
+    font-size:smaller;
+    color: var(--interaction);
+}
+
+.content-area {
+    width: calc(100vw - 280px);
+    background-color: var(--background3);
+    height: calc(100vh - 50px);
+    top: 50px;
+    right: 0;
+    position: absolute;
+    overflow-y: auto;
+    background-image: url('./assets/bg.jpg');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+}
+
+.data-container {
+    background-color: var(--background);
+    width: 90%;
+    position: relative;
+    margin-top: 12px;
+    margin-left: 12px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    padding: 20px;
+}
+  
+table {
+    border: 1px solid #838383;
+    background-color: var(--background2);
+    padding: 5px;
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+th {
+  background-color: var(--background3);
+}
+
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+button {
+    background-color: var(--background3);
+    border: 1px solid var(--interaction);
+    color: var(--interaction);
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 5px;
+    border-radius: 20px;
+}
+
+button:hover {
+    background-color: var(--interaction);
+    color: var(--background3)
+}
+
+textarea, input {
+    background-color: var(--background3);
+    border: 1px solid var(--interaction);
+    color: var(--interaction);
+    padding: 5px 10px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 5px;
 }

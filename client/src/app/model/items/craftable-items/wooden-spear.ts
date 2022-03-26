@@ -7,7 +7,7 @@ import { DamageType, Weapon, WeaponType } from "./weapon";
 export class WoodenSpear implements Item, Craftable, Weapon
 {
     public Name: string = "Wooden Spear";
-    public Experience: number = 48;
+    public Experience: number = 58;
     public ExperienceType: number = UseType.Weaponsmithing;
     public Type: ItemType = ItemType.Weapon;
     public UseType: UseType = UseType.PhysicalCombat;
