@@ -7,22 +7,23 @@
             <th>Description</th>
             <th>Value</th>
             <th>Count</th>
+            <th>Market Options</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let inventoryItem of CharacterService.Character.Inventory.Items">
             <td title="{{inventoryItem.Item.Description}}">
                 {{inventoryItem.Item.Name}}<br/>
-                <app-inventory-market-options [Item] = "inventoryItem"></app-inventory-market-options>
             </td>
             <td>{{ItemType[inventoryItem.Item.Type]}}</td>
             <td>{{inventoryItem.Item.Description}}</td>
             <td>{{inventoryItem.Item.Value}}</td>
             <td>
-                {{inventoryItem.Count}}
                 <button (click)="RemoveItemFromInventory(inventoryItem.Item)">-</button>
                 <button (click)="AddItemToInventory(inventoryItem.Item)">+</button>
+                {{inventoryItem.Count}}
             </td>
+            <td><app-inventory-market-options [Item] = "inventoryItem"></app-inventory-market-options></td>
         </tr>
     </tbody>
 </table>
