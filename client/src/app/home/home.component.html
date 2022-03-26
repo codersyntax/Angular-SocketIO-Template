@@ -44,14 +44,15 @@
                             <td title="{{inventoryItem.Item.Description}}">
                                 {{inventoryItem.Item.Name}}&nbsp;
                                 <button (click)="AddItemToMarket(inventoryItem)">Sell</button>
+                                <button (click)="AddAllItemToMarket(inventoryItem)">Sell All</button>
                             </td>
                             <td>{{ItemType[inventoryItem.Item.Type]}}</td>
                             <td>{{inventoryItem.Item.Description}}</td>
                             <td>{{inventoryItem.Item.Value}}</td>
                             <td>
                                 {{inventoryItem.Count}}
-                                <button (click)="RemoveItemFromInventory(inventoryItem.Item.Name)">-</button>
-                                <button (click)="AddItemToInventory(inventoryItem.Item.Name)">+</button>
+                                <button (click)="RemoveItemFromInventory(inventoryItem.Item)">-</button>
+                                <button (click)="AddItemToInventory(inventoryItem.Item)">+</button>
                             </td>
                         </tr>
                     </tbody>
@@ -151,15 +152,15 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Count</th>
                             <th>Price</th>
+                            <th>Count</th>
                             <th>Listing Owner</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let listing of Market.Listings">
                             <td>{{listing.Item.Name}}</td>
-                            <td>{{listing.Price}}</td>
+                            <td>{{listing.Price * listing.Count}}</td>
                             <td>{{listing.Count}}</td>
                             <td>{{listing.ListingOwner.Name}}</td>
                         </tr>

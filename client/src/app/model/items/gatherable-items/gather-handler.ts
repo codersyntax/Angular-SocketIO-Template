@@ -25,7 +25,7 @@ export class GatherHandler {
     public GatherItems(item: Gatherable, player: Character, playerInventory: Inventory, activityLog: ElementRef) : Inventory {
         if(item.Type == ItemType.Material)
         {
-            this.inventoryHandler.AddItemByObject(playerInventory.Items, item, activityLog);
+            this.inventoryHandler.AddItem(playerInventory.Items, item, activityLog);
             activityLog.nativeElement.value = item.Name + " gathered\n" + activityLog.nativeElement.value;
             player.Experience += item.Experience;
             player.Level = this.levelHandler.CalculateLevel(player.Experience);

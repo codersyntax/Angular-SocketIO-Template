@@ -109,10 +109,16 @@ export class HomeComponent {
   }
 
   AddItemToMarket(item: InventoryItem) {
-    this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, item.Item.Name, this.ActivityLog);
+    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, item.Item, this.ActivityLog);
     var marketItem = new MarketItem(this.CharacterHandler.Character, item.Item, 1, 1);
     this.socket.emit("AddMarketItem", JSON.stringify(marketItem));
-    //this.Market.Listings.push(new MarketItem(this.CharacterHandler.Character, item.Item, 1))
+    this.UpdateStorage();
+  }
+
+  AddAllItemToMarket(item: InventoryItem) {
+    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.RemoveItems(this.CharacterHandler.Character.Inventory.Items, item.Item, item.Count, this.ActivityLog);
+    var marketItem = new MarketItem(this.CharacterHandler.Character, item.Item, item.Count, 1);
+    this.socket.emit("AddMarketItem", JSON.stringify(marketItem));
     this.UpdateStorage();
   }
 
@@ -184,13 +190,13 @@ export class HomeComponent {
     this.GlobalInterval = undefined;
   }
 
-  AddItemToInventory(itemName: string) {
-    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.AddItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
+  AddItemToInventory(item: Item) {
+    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.AddItem(this.CharacterHandler.Character.Inventory.Items, item, this.ActivityLog);
     this.UpdateStorage();
   }
 
-  RemoveItemFromInventory(itemName: string) {
-    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, itemName, this.ActivityLog);
+  RemoveItemFromInventory(item: Item) {
+    this.CharacterHandler.Character.Inventory.Items = this.CharacterHandler.InventoryHandler.RemoveItem(this.CharacterHandler.Character.Inventory.Items, item, this.ActivityLog);
     this.UpdateStorage();
   }
 }

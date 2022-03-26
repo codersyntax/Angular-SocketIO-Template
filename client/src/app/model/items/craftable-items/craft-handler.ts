@@ -27,7 +27,7 @@ export class CraftHandler {
                 if(playerHaveRequiredMaterials)
                 {
                     this.RemoveRequiredMaterials(playerInventory, item.Recipe);
-                    this.inventoryHandler.AddItemByObject(playerInventory.Items, item, activityLog);
+                    this.inventoryHandler.AddItem(playerInventory.Items, item, activityLog);
                     activityLog.nativeElement.value = item.Name + " crafted and added to inventory\n" + activityLog.nativeElement.value;
                     player.Experience += item.Experience;
                     player.Level = this.levelHandler.CalculateLevel(player.Experience);
