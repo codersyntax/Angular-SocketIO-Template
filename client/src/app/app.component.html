@@ -12,18 +12,18 @@
                 <li (click)="OnSelect($event)" routerLink="/market">Market Board</li>
                 <li (click)="OnSelect($event)" routerLink="/mining"><span>Mining</span><span class="level">Level {{CharacterService.Character.Skills.MiningLevel}}</span></li>
                 <li (click)="OnSelect($event)" routerLink="/botany"><span>Botany</span><span class="level">Level {{CharacterService.Character.Skills.BotanyLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/farming"><span>Farming</span><span class="level">Level {{CharacterService.Character.Skills.FarmingLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/fishing"><span>Fishing</span><span class="level">Level {{CharacterService.Character.Skills.FishingLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/alchemy"><span>Alchemy</span><span class="level">Level {{CharacterService.Character.Skills.AlchemyLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/cooking"><span>Cooking</span><span class="level">Level {{CharacterService.Character.Skills.CookingLevel}}</span></li>
                 <li (click)="OnSelect($event)" routerLink="/smithing"><span>Smithing</span><span class="level">Level {{CharacterService.Character.Skills.SmithingLevel}}</span></li>
                 <li (click)="OnSelect($event)" routerLink="/weaponsmithing"><span>Weaponsmithing</span><span class="level">Level {{CharacterService.Character.Skills.WeaponsmithingLevel}}</span></li>
-              </ul>
-              <h5>Activity Log</h5>
-              <textarea style="width: 90%; height: 100px;" [(ngModel)]="ToastService.Message" readonly></textarea>
-              <h5>Global Chat</h5>
-              <textarea style="width:90%; height: 100px;" #chatTextArea readonly></textarea>
-              <input style="width:90%;" type="text" placeholder="Send message..." #messageTextField (keyup.enter)="onChatMessageEnter()" />
-              <h5>Current Online Players</h5>
-              <div *ngFor="let player of CurrentOnlinePlayers">
-                  <h6>{{player.Name}}</h6>
-              </div>
+                <li (click)="OnSelect($event)" routerLink="/armorer"><span>Armorer</span><span class="level">Level {{CharacterService.Character.Skills.ArmorerLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/weaver"><span>Weaver</span><span class="level">Level {{CharacterService.Character.Skills.WeaverLevel}}</span></li>
+                <li (click)="OnSelect($event)" routerLink="/goldsmithing"><span>Goldsmithing</span><span class="level">Level {{CharacterService.Character.Skills.GoldsmithingLevel}}</span></li>
+            </ul>
+            <h5>Activity Log</h5>
+            <textarea style="width: 90%; height: 100px;" [(ngModel)]="ToastService.Message" readonly></textarea>
         </div>
         <div class="topbar">
             <div>

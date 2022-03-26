@@ -14,6 +14,13 @@ import { BotanyComponent } from './botany/botany.component';
 import { WeaponsmithingComponent } from './weaponsmithing/weaponsmithing.component';
 import { InventoryItemComponent } from './inventory-item/inventory-item.component';
 import { SmithingComponent } from './smithing/smithing.component';
+import { FishingComponent } from './fishing/fishing.component';
+import { FarmingComponent } from './farming/farming.component';
+import { GoldsmithingComponent } from './goldsmithing/goldsmithing.component';
+import { WeaverComponent } from './weaver/weaver.component';
+import { ArmorerComponent } from './armorer/armorer.component';
+import { CookingComponent } from './cooking/cooking.component';
+import { AlchemyComponent } from './alchemy/alchemy.component';
 
 const hostname = window.location.hostname;
 const url = (hostname === 'localhost') ? `${window.location.protocol}//${hostname}:5000` : "";
@@ -30,7 +37,14 @@ const config: SocketIoConfig = { url, options: {} };
     BotanyComponent,
     WeaponsmithingComponent,
     InventoryItemComponent,
-    SmithingComponent
+    SmithingComponent,
+    FishingComponent,
+    FarmingComponent,
+    GoldsmithingComponent,
+    WeaverComponent,
+    ArmorerComponent,
+    CookingComponent,
+    AlchemyComponent
   ],
   imports: [
     FormsModule,

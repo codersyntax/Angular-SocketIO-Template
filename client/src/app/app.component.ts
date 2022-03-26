@@ -10,12 +10,8 @@ import { WebSocketService } from './web-socket.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  @ViewChild('messageTextField') public MessageTextField!: ElementRef;
-  @ViewChild('chatTextArea') public ChatTextArea!: ElementRef;
-  
+export class AppComponent {  
   SaveString!: string;
-  CurrentOnlinePlayers : Character[] | undefined;
   ItemType = ItemType;
 
   constructor(public ToastService: ToastService, public CharacterService: CharacterService, private WebSocketService: WebSocketService) {
@@ -29,14 +25,6 @@ export class AppComponent {
     this.WebSocketService.socket.on('updateCharacterConnectionString', (socketId: any) => {
       this.CharacterService.Character.SocketId = socketId;
     });
-
-    this.WebSocketService.socket.on('currentOnlineCharacters', (currentOnlinePlayers: any) => {
-      this.CurrentOnlinePlayers = currentOnlinePlayers;
-    });
-
-    this.WebSocketService.socket.on('postChatMessage', (message: any) => {
-      this.ChatTextArea.nativeElement.value = message + this.ChatTextArea.nativeElement.value;
-    });
   }
 
   public OnSelect(e: any) {
@@ -47,13 +35,6 @@ export class AppComponent {
       }
     }
     e.target.className = "active";
-  }
-
-  public onChatMessageEnter() {
-    console.log(this.ToastService);
-    var chatMessage = new Date().toLocaleTimeString() + " " + this.CharacterService.Character.Name + " : " + this.MessageTextField.nativeElement.value + "\n";
-    this.WebSocketService.socket.emit("chatMessage", chatMessage);
-    this.MessageTextField.nativeElement.value = "";
   }
 
   public onNameEnter(playerName: string) {
