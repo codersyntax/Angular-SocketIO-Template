@@ -5,7 +5,7 @@ export class Character {
     public Experience: number = 0;
     public Level: number = 1;
     public Skills: Skills = new Skills;
-    public Currency: number = 0;
+    public Currency: number = 1000;
     public SocketId: string | undefined;
     public Inventory = new Inventory();
 

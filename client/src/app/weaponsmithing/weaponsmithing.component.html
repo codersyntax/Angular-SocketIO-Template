@@ -7,7 +7,6 @@
             <th>Lvl Req</th>
             <th>Recipe</th>
             <th>Craft Rate</th>
-            <th>Current Amount</th>
             <th>Experience</th>
         </tr>
     </thead>
@@ -16,7 +15,7 @@
             <ng-container *ngIf="CharacterService.Character.Skills.WeaponsmithingLevel >= item.LevelRequirement && item.ExperienceType == ExperienceType.Weaponsmithing">
                 <td title="{{item.Description}}">
                     <button *ngIf="CharacterService.IsBusy" (click)="CancelAction(); CharacterService.IsBusy = false;">Cancel</button><button *ngIf="!CharacterService.IsBusy" (click)="CraftItem(item)">Craft</button>&nbsp;
-                    {{item.Name}}
+                    {{item.Name}} <span style="color: var(--interaction); font-size:smaller;">x{{this.GetItemCount(item)}}</span>
                 </td>
                 <td>{{item.Description}}</td>
                 <td>{{ItemType[item.Type]}}</td>
@@ -27,7 +26,6 @@
                     </p>
                 </td>
                 <td>{{item.CraftTime}} seconds</td>
-                <td>{{this.GetItemCount(item)}}</td>
                 <td>Grants {{item.Experience}}xp</td>
             </ng-container>
         </tr>
