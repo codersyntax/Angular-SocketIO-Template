@@ -88,7 +88,7 @@ export class GatherHandler {
             gatherRate = item.Rate * 1000;
             break;
         }
-        gatherRate = Math.floor(gatherRate / 1000) * 1000;
+        //gatherRate = Math.floor(gatherRate / 1000) * 1000;
         return gatherRate;
     }
 
