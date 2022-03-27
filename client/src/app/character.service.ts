@@ -18,6 +18,7 @@ export class CharacterService {
   public CraftHandler: CraftHandler = new CraftHandler();
   public GatherHandler: GatherHandler = new GatherHandler();
   public SaveString: string;
+  Rate: number = 0;
   IsBusy : boolean = false;
   GlobalInterval: any;
 

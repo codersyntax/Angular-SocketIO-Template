@@ -32,6 +32,7 @@ export class MiningComponent {
         if(item.LevelRequirement <= this.CharacterService.Character.Skills.MiningLevel) {
           this.CharacterService.IsBusy = true;
           var gatherRate = this.CharacterService.GatherHandler.DetermineGatherRate(this.CharacterService.Character.Inventory, item);
+          this.CharacterService.Rate = gatherRate;
           this.CharacterService.GlobalInterval = setInterval(() => {
             this.CharacterService.GatherHandler.GatherItems(item, this.CharacterService.Character, this.CharacterService.Character.Inventory);
             this.UpdateStorage();
@@ -59,6 +60,7 @@ export class MiningComponent {
   CancelAction() {
     clearInterval(this.CharacterService.GlobalInterval);
     this.CharacterService.GlobalInterval = undefined;
+    this.CharacterService.Rate = 0;
   }
 
   UpdateStorage() {

@@ -32,6 +32,7 @@ export class SmithingComponent implements OnInit {
       if (this.CharacterService.CraftHandler.HasRequiredMaterials(this.CharacterService.Character.Inventory, item.Recipe)) {
         if (item.LevelRequirement <= this.CharacterService.Character.Skills.SmithingLevel) {
           this.CharacterService.IsBusy = true;
+          this.CharacterService.Rate = item.CraftTime * 1000;
           this.CharacterService.GlobalInterval = setInterval(() => {
             this.CharacterService.CraftHandler.CraftItem(item, this.CharacterService.Character, this.CharacterService.Character.Inventory);
             this.UpdateStorage();
@@ -53,6 +54,7 @@ export class SmithingComponent implements OnInit {
   CancelAction() {
     clearInterval(this.CharacterService.GlobalInterval);
     this.CharacterService.GlobalInterval = undefined;
+    this.CharacterService.Rate = 0;
   }
 
   GetItemCount(item: Item) {

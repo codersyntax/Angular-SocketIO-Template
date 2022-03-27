@@ -37,6 +37,15 @@ export class AppComponent {
     e.target.className = "active";
   }
 
+  public DetermineAnimation() {
+    if(this.CharacterService.Rate == 0) {
+      return "";
+    }
+    else {
+      return "animation: prog " + this.CharacterService.Rate / 1000 + "s linear infinite";
+    }
+  }
+
   public onNameEnter(playerName: string) {
     this.CharacterService.SetNewCharacter(playerName);
     this.WebSocketService.socket.emit("userSubmittedPlayerName", this.CharacterService.Character);

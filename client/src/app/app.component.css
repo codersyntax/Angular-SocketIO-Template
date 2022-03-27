@@ -1,0 +1,34 @@
+.timer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 0;
+    height: 20px;
+    border-radius: 20px;
+    background-color: var(--interaction);
+    z-index: 9;
+    box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+    background-image: linear-gradient(var(--interaction), var(--interaction2));
+    background-image: linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.2) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.2) 75%,
+        transparent 75%,
+        transparent
+    );
+    background-size: 50px 50px;
+}
+
+@keyframes prog {
+    0% {
+        width: 0;
+        background-position: 0 0;
+    }
+    100% {
+        width: calc(99% - 417px);
+        background-position: 50px 50px;
+    }
+}
